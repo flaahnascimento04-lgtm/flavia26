@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flavia's 26</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#08070b;color:#f5f2f8;font-family:'DM Sans',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:-20%;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 15%,rgba(133,74,190,.20),transparent 28%),
+    radial-gradient(circle at 15% 75%,rgba(82,39,119,.13),transparent 25%),
+    radial-gradient(circle at 85% 65%,rgba(164,112,211,.09),transparent 25%);
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:10;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 6vw;border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(8,7,11,.72);backdrop-filter:blur(16px);
+}
+.logo{font-weight:700;letter-spacing:.16em;font-size:13px}
+nav a{color:#aaa4b1;text-decoration:none;font-size:12px;letter-spacing:.13em;margin-left:28px}
+nav a:hover{color:#fff}
+section{position:relative;z-index:1;min-height:100vh;padding:130px 7vw 70px}
+.hero{display:flex;align-items:center;justify-content:center;text-align:center}
+.kicker{font-size:11px;letter-spacing:.42em;color:#aaa1b4;margin-bottom:26px}
+h1{
+  font-family:'Playfair Display',serif;font-size:clamp(76px,15vw,190px);
+  line-height:.78;font-weight:600;letter-spacing:-.07em;
+}
+h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20vw,245px);
+  font-weight:700;letter-spacing:-.12em;margin-left:-.06em;
+  background:linear-gradient(140deg,#fff 15%,#c8b1d8 45%,#73429a 85%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.date{margin-top:36px;font-size:12px;letter-spacing:.38em;color:#bdb5c3}
+.tag{margin-top:15px;color:#8e8795;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.btn{
+  display:inline-flex;margin-top:38px;padding:14px 25px;border:1px solid rgba(196,161,220,.5);
+  color:#eee8f3;text-decoration:none;font-size:11px;letter-spacing:.18em;
+  transition:.25s;background:rgba(124,68,160,.08)
+}
+.btn:hover{background:rgba(124,68,160,.2);transform:translateY(-2px)}
+.title{text-align:center;margin-bottom:55px}
+.title small{font-size:10px;letter-spacing:.35em;color:#8f8795}
+.title h2{font-family:'Playfair Display',serif;font-size:52px;font-weight:500;margin-top:10px}
+.scoreboard{max-width:900px;margin:auto}
+.team{
+  display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:20px;
+  padding:23px 25px;margin:10px 0;border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035));
+}
+.team.first{border-color:rgba(183,137,211,.45);box-shadow:0 0 35px rgba(111,52,145,.12)}
+.rank{font-family:'Playfair Display';font-size:30px;color:#aaa}
+.team.first .rank{color:#d8bde7}
+.teamname{font-weight:600;letter-spacing:.08em}
+.sub{font-size:10px;color:#7f7885;margin-top:5px;letter-spacing:.12em}
+.points{font-size:36px;font-weight:700}
+.pts{font-size:10px;color:#817987;letter-spacing:.12em}
+.score{display:flex;align-items:center;gap:18px}.score-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.score-buttons button{border:1px solid rgba(196,161,220,.35);background:rgba(124,68,160,.10);color:#eee8f3;padding:9px 11px;min-width:42px;border-radius:5px;cursor:pointer;font:600 11px 'DM Sans',sans-serif;transition:.18s}.score-buttons button:hover{background:rgba(153,91,194,.30);border-color:rgba(220,190,238,.65);transform:translateY(-1px)}.score-buttons button:active{transform:scale(.96)}
+.score-buttons .minus{border-color:rgba(220,150,170,.35)}.score-buttons button:disabled{opacity:.45;cursor:wait}.team.flash{animation:flash .55s ease}@keyframes flash{0%{background:rgba(150,82,195,.28)}100%{background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035))}}.status{text-align:center;margin:22px auto 0;color:#77707f;font-size:10px;letter-spacing:.15em;min-height:16px}.status.ok{color:#a991b5}.status.error{color:#d08ba1}.reset-wrap{text-align:center;margin-top:24px}.reset{border:0;background:none;color:#625d68;cursor:pointer;font:10px 'DM Sans',sans-serif;letter-spacing:.12em;text-decoration:underline}.games{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  padding:27px;border:1px solid rgba(255,255,255,.08);min-height:170px;
+  background:rgba(255,255,255,.025);transition:.25s
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(180,132,209,.4)}
+.num{font-size:10px;color:#8d8493;letter-spacing:.2em}
+.card h3{font-family:'Playfair Display';font-size:25px;margin:30px 0 8px}
+.card p{font-size:12px;color:#918a97;line-height:1.6}
+.prizes{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.prize{
+  min-height:240px;padding:25px;border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(102,51,132,.06));
+  display:flex;flex-direction:column;justify-content:space-between
+}
+.prize .symbol{font-size:35px}
+.prize h3{font-family:'Playfair Display';font-size:26px}
+.prize p{color:#8d8793;font-size:11px;margin-top:6px}
+footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacing:.2em;border-top:1px solid rgba(255,255,255,.06)}
+@media(max-width:700px){
+ nav{padding:20px 5vw}nav div:last-child{display:none}
+ section{padding:110px 5vw 60px}
+ h1{font-size:72px}h1 span{font-size:120px}
+ .games,.prizes{grid-template-columns:1fr}
+ .team{grid-template-columns:40px 1fr;padding:18px 14px}.score{grid-column:2;justify-content:space-between;align-items:center}.score-buttons{justify-content:flex-start}
+ .points{font-size:28px}.title h2{font-size:42px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">FLAVIA'S 26</div>
+  <div>
+    <a href="#placar">PLACAR</a>
+    <a href="#jogos">JOGOS</a>
+    <a href="#premios">PRÊMIOS</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="kicker">A NIGHT TO REMEMBER</div>
+    <h1>FLAVIA'S<span>26</span></h1>
+    <div class="date">26 · 09 · 2026</div>
+    <div class="tag">let the games begin</div>
+    <a class="btn" href="#placar">VER O PLACAR</a>
+  </div>
+</section>
+
+<section id="placar">
+  <div class="title"><small>LIVE RANKING</small><h2>Quem vai levar?</h2></div>
+  <div class="scoreboard" id="scoreboard"></div>
+  <div class="status" id="status">CONECTANDO AO PLACAR...</div>
+  <div class="reset-wrap"><button class="reset" onclick="resetScores()">ZERAR PLACAR</button></div>
+</section>
+
+<section id="jogos">
+  <div class="title"><small>THE GAMES</small><h2>Os jogos</h2></div>
+  <div class="games">
+    <div class="card"><div class="num">01 / 05</div><h3>Beerpong</h3><p>Precisão, estratégia e um pouco de sorte.</p></div>
+    <div class="card"><div class="num">02 / 05</div><h3>Playlist da Flavinha</h3><p>Será que vocês conhecem os gostos musicais da aniversariante?</p></div>
+    <div class="card"><div class="num">03 / 05</div><h3>Efeito Manada</h3><p>Pense como todo mundo. Ou tente não pensar.</p></div>
+    <div class="card"><div class="num">04 / 05</div><h3>Flip Cup</h3><p>Velocidade, coordenação e trabalho em equipe.</p></div>
+    <div class="card"><div class="num">05 / 05</div><h3>Desafio Final</h3><p>Um último jogo pode mudar tudo.</p></div>
+  </div>
+</section>
+
+<section id="premios">
+  <div class="title"><small>THE PRIZES</small><h2>O que está em jogo</h2></div>
+  <div class="prizes">
+    <div class="prize"><div class="symbol">✦</div><div><h3>Prêmio Principal</h3><p>Para a equipe campeã</p></div></div>
+    <div class="prize"><div class="symbol">◈</div><div><h3>Prêmio Surpresa</h3><p>Porque ninguém sabe o que vem aí</p></div></div>
+    <div class="prize"><div class="symbol">◇</div><div><h3>Prêmios Individuais</h3><p>Para quem se destacou durante a noite</p></div></div>
+  </div>
+</section>
+
+<footer>FLAVIA'S 26 · 2026</footer>
+<script>
+const SUPABASE_URL = "https://jjhnzkqrhzlcegvtqxbc.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ae9fnMuMvKj9sH5HtjdtwA_aAJqlUq8";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let teams = [];
+
+function setStatus(message, type = "") {
+  const el = document.getElementById("status");
+  el.textContent = message;
+  el.className = "status " + type;
+}
+
+function renderTeams() {
+  const board = document.getElementById("scoreboard");
+  teams.sort((a,b) => b.points - a.points || a.id - b.id);
+  board.innerHTML = teams.map((team,index) => `
+    <div class="team ${index === 0 ? 'first' : ''}" id="team-${team.id}">
+      <div class="rank">${String(index+1).padStart(2,'0')}</div>
+      <div>
+        <div class="teamname">${team.name.toUpperCase()}</div>
+        <div class="sub">${index === 0 ? 'LÍDER DO MOMENTO' : 'NA DISPUTA'}</div>
+      </div>
+      <div class="score">
+        <div><div class="points">${team.points}</div><div class="pts">PONTOS</div></div>
+        <div class="score-buttons">
+          <button onclick="addPoints(${team.id},1)">+1</button>
+          <button onclick="addPoints(${team.id},2)">+2</button>
+          <button onclick="addPoints(${team.id},4)">+4</button>
+          <button onclick="addPoints(${team.id},7)">+7</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+async function loadTeams() {
+  const {data,error} = await supabaseClient.from('teams').select('id,name,points');
+  if(error){ console.error(error); setStatus('ERRO AO CARREGAR O PLACAR','error'); return; }
+  teams = data || [];
+  renderTeams();
+  setStatus('PLACAR ONLINE • ATUALIZAÇÃO EM TEMPO REAL','ok');
+}
+
+async function addPoints(teamId, amount) {
+  const buttons = document.querySelectorAll(`#team-${teamId} button`);
+  buttons.forEach(b => b.disabled = true);
+  const {error} = await supabaseClient.rpc('add_points',{team_id:teamId,amount:amount});
+  buttons.forEach(b => b.disabled = false);
+  if(error){ console.error(error); setStatus('ERRO AO ATUALIZAR OS PONTOS','error'); return; }
+  const el=document.getElementById(`team-${teamId}`);
+  if(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');}
+}
+
+async function resetScores(){
+  if(!confirm('Tem certeza que quer ZERAR o placar de todas as equipes?')) return;
+  const {error}=await supabaseClient.from('teams').update({points:0}).neq('id',0);
+  if(error){console.error(error);setStatus('ERRO AO ZERAR O PLACAR','error');return;}
+  setStatus('PLACAR ZERADO','ok');
+}
+
+supabaseClient.channel('teams-live')
+  .on('postgres_changes',{event:'*',schema:'public',table:'teams'},()=>loadTeams())
+  .subscribe(status=>{ if(status==='SUBSCRIBED') console.log('Placar em tempo real conectado.'); });
+
+loadTeams();
+</script>
+</body>
+</html>
