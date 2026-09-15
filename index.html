@@ -517,7 +517,18 @@ supabaseClient.channel('teams-live')
   .subscribe(status=>{ if(status==='SUBSCRIBED') console.log('Placar em tempo real conectado.'); });
   
 function toggleRules(button){
-  function togglePrize(button){
+  const rules = button.nextElementSibling;
+
+  rules.classList.toggle('show');
+
+  if(rules.classList.contains('show')){
+    button.textContent = 'ESCONDER REGRAS ↑';
+  }else{
+    button.textContent = 'VER REGRAS →';
+  }
+}
+
+function togglePrize(button){
   const prizes = button.nextElementSibling;
 
   prizes.classList.toggle('show');
@@ -528,15 +539,6 @@ function toggleRules(button){
     button.textContent = 'VER PRÊMIOS →';
   }
 }
-  const rules = button.nextElementSibling;
-
-  rules.classList.toggle('show');
-
-  if(rules.classList.contains('show')){
-    button.textContent = 'ESCONDER REGRAS ↑';
-  }else{
-    button.textContent = 'VER REGRAS →';
-  }
 }
 loadTeams();
 </script>
