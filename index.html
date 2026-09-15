@@ -147,15 +147,90 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 .rules-button:hover{
   color:#fff;
 }
-.prizes{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.prize{
-  min-height:240px;padding:25px;border:1px solid rgba(255,255,255,.08);
-  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(102,51,132,.06));
-  display:flex;flex-direction:column;justify-content:space-between
+.prizes{
+  max-width:1050px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
-.prize .symbol{font-size:35px}
-.prize h3{font-family:'Playfair Display';font-size:26px}
-.prize p{color:#8d8793;font-size:11px;margin-top:6px}
+
+.prize{
+  min-height:240px;
+  padding:25px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(102,51,132,.06));
+  transition:.25s;
+}
+
+.prize:hover{
+  transform:translateY(-4px);
+  border-color:rgba(180,132,209,.4);
+}
+
+.prize .symbol{
+  font-size:35px;
+}
+
+.prize h3{
+  font-family:'Playfair Display';
+  font-size:26px;
+  margin-top:25px;
+}
+
+.prize p{
+  color:#8d8793;
+  font-size:11px;
+  margin-top:6px;
+}
+
+.prize-list{
+  display:none;
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.prize-list.show{
+  display:block;
+}
+
+.prize-list ul{
+  list-style:none;
+}
+
+.prize-list li{
+  font-size:11px;
+  line-height:1.6;
+  color:#918a97;
+  padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.prize-list li:last-child{
+  border-bottom:none;
+}
+
+.prize-list li::before{
+  content:"✦";
+  color:#b99aca;
+  margin-right:9px;
+}
+
+.prize-button{
+  margin-top:20px;
+  border:0;
+  background:none;
+  color:#b99aca;
+  cursor:pointer;
+  font:600 10px 'DM Sans',sans-serif;
+  letter-spacing:.14em;
+  padding:0;
+}
+
+.prize-button:hover{
+  color:#fff;
+}
 footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacing:.2em;border-top:1px solid rgba(255,255,255,.06)}
 @media(max-width:700px){
  nav{padding:20px 5vw}nav div:last-child{display:none}
@@ -304,11 +379,78 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 </section>
 
 <section id="premios">
-  <div class="title"><small>OS PRÊMIOS</small><h2>Para equipe vencedora, os prêmios estão dividos em:</h2></div>
+
+  <div class="title">
+    <small>OS PRÊMIOS</small>
+    <h2>Para equipe vencedora</h2>
+  </div>
+
   <div class="prizes">
-    <div class="prize"><div class="symbol">✦</div><div><h3>Prêmio Principal</h3><p>O melhor prêmio da noite</p></div></div>
-    <div class="prize"><div class="symbol">◈</div><div><h3>Prêmios Surpresa</h3><p>Prendas médias</p></div></div>
-    <div class="prize"><div class="symbol">◇</div><div><h3>Prêmios Comuns</h3><p>Mini prendas pra cada um do time vencedor ficar feliz</p></div></div>
+
+    <div class="prize">
+      <div class="symbol">✦</div>
+
+      <h3>Prêmio Principal</h3>
+      <p>O grande prêmio da noite.</p>
+
+      <button class="prize-button" onclick="togglePrize(this)">
+        VER PRÊMIO →
+      </button>
+
+      <div class="prize-list">
+        <ul>
+          <li>Vale-presente Centauro</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="prize">
+      <div class="symbol">◈</div>
+
+      <h3>Prêmios Surpresa</h3>
+      <p>Prêmios especiais para os vencedores.</p>
+
+      <button class="prize-button" onclick="togglePrize(this)">
+        VER PRÊMIOS →
+      </button>
+
+      <div class="prize-list">
+        <ul>
+          <li>Kit Sex Shop</li>
+          <li>Kit Oceane</li>
+          <li>Caneca Edward</li>
+          <li>Espumante</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="prize">
+      <div class="symbol">◇</div>
+
+      <h3>Prêmios Comuns</h3>
+      <p>Uma prenda para cada integrante do time vencedor.</p>
+
+      <button class="prize-button" onclick="togglePrize(this)">
+        VER PRÊMIOS →
+      </button>
+
+      <div class="prize-list">
+        <ul>
+          <li>Kit de esmalte</li>
+          <li>Nécessaire</li>
+          <li>Baralho</li>
+          <li>Isqueiro</li>
+          <li>Palavra cruzada</li>
+          <li>Livro de romance</li>
+          <li>Livro de investigação</li>
+          <li>Kit de papelaria</li>
+          <li>Touca com enrolador de cachos</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -375,6 +517,17 @@ supabaseClient.channel('teams-live')
   .subscribe(status=>{ if(status==='SUBSCRIBED') console.log('Placar em tempo real conectado.'); });
   
 function toggleRules(button){
+  function togglePrize(button){
+  const prizes = button.nextElementSibling;
+
+  prizes.classList.toggle('show');
+
+  if(prizes.classList.contains('show')){
+    button.textContent = 'ESCONDER PRÊMIOS ↑';
+  }else{
+    button.textContent = 'VER PRÊMIOS →';
+  }
+}
   const rules = button.nextElementSibling;
 
   rules.classList.toggle('show');
