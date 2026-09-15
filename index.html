@@ -67,7 +67,14 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 .points{font-size:36px;font-weight:700}
 .pts{font-size:10px;color:#817987;letter-spacing:.12em}
 .score{display:flex;align-items:center;gap:18px}.score-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.score-buttons button{border:1px solid rgba(196,161,220,.35);background:rgba(124,68,160,.10);color:#eee8f3;padding:9px 11px;min-width:42px;border-radius:5px;cursor:pointer;font:600 11px 'DM Sans',sans-serif;transition:.18s}.score-buttons button:hover{background:rgba(153,91,194,.30);border-color:rgba(220,190,238,.65);transform:translateY(-1px)}.score-buttons button:active{transform:scale(.96)}
-.score-buttons .minus{border-color:rgba(220,150,170,.35)}.score-buttons button:disabled{opacity:.45;cursor:wait}.team.flash{animation:flash .55s ease}@keyframes flash{0%{background:rgba(150,82,195,.28)}100%{background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035))}}.status{text-align:center;margin:22px auto 0;color:#77707f;font-size:10px;letter-spacing:.15em;min-height:16px}.status.ok{color:#a991b5}.status.error{color:#d08ba1}.reset-wrap{text-align:center;margin-top:24px}.reset{border:0;background:none;color:#625d68;cursor:pointer;font:10px 'DM Sans',sans-serif;letter-spacing:.12em;text-decoration:underline}.games{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.score-buttons .minus{border-color:rgba(220,150,170,.35)}.score-buttons button:disabled{opacity:.45;cursor:wait}.team.flash{animation:flash .55s ease}@keyframes flash{0%{background:rgba(150,82,195,.28)}100%{background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035))}}.status{text-align:center;margin:22px auto 0;color:#77707f;font-size:10px;letter-spacing:.15em;min-height:16px}.status.ok{color:#a991b5}.status.error{color:#d08ba1}.reset-wrap{text-align:center;margin-top:24px}.reset{border:0;background:none;color:#625d68;cursor:pointer;font:10px 'DM Sans',sans-serif;letter-spacing:.12em;text-decoration:underline}.games{
+  width:100%;
+  max-width:1050px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
 .card{
   padding:27px;
   border:1px solid rgba(255,255,255,.08);
