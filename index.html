@@ -169,10 +169,8 @@ function renderTeams() {
       <div class="score">
         <div><div class="points">${team.points}</div><div class="pts">PONTOS</div></div>
         <div class="score-buttons">
+          <button class="minus" onclick="addPoints(${team.id},-1)">−1</button>
           <button onclick="addPoints(${team.id},1)">+1</button>
-          <button onclick="addPoints(${team.id},2)">+2</button>
-          <button onclick="addPoints(${team.id},4)">+4</button>
-          <button onclick="addPoints(${team.id},7)">+7</button>
         </div>
       </div>
     </div>`).join('');
