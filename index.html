@@ -233,7 +233,11 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 }
 footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacing:.2em;border-top:1px solid rgba(255,255,255,.06)}
 @media(max-width:700px){
+  .points-grid{
+  grid-template-columns:1fr;
+}
  nav{padding:20px 5vw}nav div:last-child{display:none}
+  
  section{padding:110px 5vw 60px}
  h1{font-size:72px}h1 span{font-size:120px}
  .games,.prizes{grid-template-columns:1fr}
@@ -248,6 +252,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
   <div>
     <a href="#placar">PLACAR</a>
     <a href="#jogos">JOGOS</a>
+    <a href="#pontos">PONTUAÇÃO</a>
     <a href="#premios">PRÊMIOS</a>
   </div>
 </nav>
@@ -378,6 +383,115 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 </div>
 </section>
 
+<section id="pontos">
+
+  <div class="title">
+    <small>SISTEMA DE PONTOS</small>
+    <h2>Como funciona?</h2>
+  </div>
+
+  <div class="points-intro">
+    <p>
+      Cada equipe acumula pontos ao longo da noite.
+      A pontuação final é formada pelos resultados dos jogos
+      e pelo bônus dos presentes.
+    </p>
+  </div>
+
+  <div class="points-grid">
+
+    <div class="points-card">
+      <div class="points-number">01</div>
+      <h3>Beerpong</h3>
+
+      <div class="points-ranking">
+        <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
+        <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
+        <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
+        <div><span>4º lugar</span><strong>5 pts</strong></div>
+      </div>
+    </div>
+
+
+    <div class="points-card">
+      <div class="points-number">02</div>
+      <h3>Playlist da Flavinha</h3>
+
+      <div class="points-ranking">
+        <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
+        <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
+        <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
+        <div><span>4º lugar</span><strong>5 pts</strong></div>
+      </div>
+    </div>
+
+
+    <div class="points-card">
+      <div class="points-number">03</div>
+      <h3>Nem a Pato</h3>
+
+      <div class="points-ranking">
+        <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
+        <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
+        <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
+        <div><span>4º lugar</span><strong>5 pts</strong></div>
+      </div>
+    </div>
+
+
+    <div class="points-card">
+      <div class="points-number">04</div>
+      <h3>Flip Cup</h3>
+
+      <div class="points-ranking">
+        <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
+        <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
+        <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
+        <div><span>4º lugar</span><strong>5 pts</strong></div>
+      </div>
+    </div>
+
+
+    <div class="points-card">
+      <div class="points-number">05</div>
+      <h3>Efeito Manada</h3>
+
+      <div class="points-ranking">
+        <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
+        <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
+        <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
+        <div><span>4º lugar</span><strong>5 pts</strong></div>
+      </div>
+    </div>
+
+
+    <div class="points-card bonus">
+      <div class="points-number">✦</div>
+      <h3>Bônus dos presentes</h3>
+
+      <p>
+        Cada integrante que levar um presente
+        garante <strong>+5 pontos</strong> para sua equipe.
+      </p>
+
+      <div class="bonus-highlight">
+        +5 <span>POR PRESENTE</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="points-total">
+    <small>PONTUAÇÃO MÁXIMA NOS JOGOS</small>
+    <strong>100 PONTOS</strong>
+    <p>
+      + 5 pontos por cada presente levado
+    </p>
+  </div>
+
+</section>
+  
+
 <section id="premios">
 
   <div class="title">
@@ -452,6 +566,132 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
     </div>
 
   </div>
+
+.points-intro{
+  max-width:650px;
+  margin:-25px auto 45px;
+  text-align:center;
+}
+
+.points-intro p{
+  color:#918a97;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.points-grid{
+  max-width:1050px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.points-card{
+  padding:27px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  transition:.25s;
+}
+
+.points-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(180,132,209,.4);
+}
+
+.points-number{
+  font-size:10px;
+  color:#8d8493;
+  letter-spacing:.2em;
+}
+
+.points-card h3{
+  font-family:'Playfair Display';
+  font-size:25px;
+  margin:25px 0 20px;
+}
+
+.points-ranking div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:11px;
+  color:#918a97;
+}
+
+.points-ranking div:last-child{
+  border-bottom:none;
+}
+
+.points-ranking strong{
+  color:#d8bde7;
+  font-size:12px;
+}
+
+.points-card.bonus{
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.045),
+    rgba(102,51,132,.10)
+  );
+}
+
+.points-card.bonus p{
+  color:#918a97;
+  font-size:11px;
+  line-height:1.7;
+}
+
+.points-card.bonus p strong{
+  color:#d8bde7;
+}
+
+.bonus-highlight{
+  margin-top:25px;
+  font-size:35px;
+  font-weight:700;
+  color:#d8bde7;
+}
+
+.bonus-highlight span{
+  display:block;
+  margin-top:4px;
+  font-size:9px;
+  color:#817987;
+  letter-spacing:.15em;
+}
+
+.points-total{
+  max-width:1050px;
+  margin:45px auto 0;
+  padding:30px;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.points-total small{
+  display:block;
+  font-size:9px;
+  color:#817987;
+  letter-spacing:.2em;
+}
+
+.points-total strong{
+  display:block;
+  margin-top:8px;
+  font-family:'Playfair Display';
+  font-size:38px;
+  color:#d8bde7;
+}
+
+.points-total p{
+  margin-top:7px;
+  color:#817987;
+  font-size:10px;
+}
 </section>
 
 <footer>ANIVERSÁRIO DA FLAVIA · 2026</footer>
@@ -469,22 +709,28 @@ function setStatus(message, type = "") {
 
 function renderTeams() {
   const board = document.getElementById("scoreboard");
+
   teams.sort((a,b) => b.points - a.points || a.id - b.id);
+
   board.innerHTML = teams.map((team,index) => `
-    <div class="team ${index === 0 ? 'first' : ''}" id="team-${team.id}">
+    <div class="team ${index === 0 ? 'first' : ''}">
       <div class="rank">${String(index+1).padStart(2,'0')}</div>
+
       <div>
         <div class="teamname">${team.name.toUpperCase()}</div>
-        <div class="sub">${index === 0 ? 'LÍDER DO MOMENTO' : 'NA DISPUTA'}</div>
-      </div>
-      <div class="score">
-        <div><div class="points">${team.points}</div><div class="pts">PONTOS</div></div>
-        <div class="score-buttons">
-          <button class="minus" onclick="addPoints(${team.id},-1)">−1</button>
-          <button onclick="addPoints(${team.id},1)">+1</button>
+        <div class="sub">
+          ${index === 0 ? 'LÍDER DO MOMENTO' : 'NA DISPUTA'}
         </div>
       </div>
-    </div>`).join('');
+
+      <div class="score">
+        <div>
+          <div class="points">${team.points}</div>
+          <div class="pts">PONTOS</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 
 async function loadTeams() {
@@ -493,23 +739,6 @@ async function loadTeams() {
   teams = data || [];
   renderTeams();
   setStatus('PLACAR ONLINE • ATUALIZAÇÃO EM TEMPO REAL','ok');
-}
-
-async function addPoints(teamId, amount) {
-  const buttons = document.querySelectorAll(`#team-${teamId} button`);
-  buttons.forEach(b => b.disabled = true);
-  const {error} = await supabaseClient.rpc('add_points',{team_id:teamId,amount:amount});
-  buttons.forEach(b => b.disabled = false);
-  if(error){ console.error(error); setStatus('ERRO AO ATUALIZAR OS PONTOS','error'); return; }
-  const el=document.getElementById(`team-${teamId}`);
-  if(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');}
-}
-
-async function resetScores(){
-  if(!confirm('Tem certeza que quer ZERAR o placar de todas as equipes?')) return;
-  const {error}=await supabaseClient.from('teams').update({points:0}).neq('id',0);
-  if(error){console.error(error);setStatus('ERRO AO ZERAR O PLACAR','error');return;}
-  setStatus('PLACAR ZERADO','ok');
 }
 
 supabaseClient.channel('teams-live')
