@@ -294,11 +294,10 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 }
 
 .points-grid{
-  max-width:1050px;
-  margin:auto;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
+  grid-template-columns:repeat(2,1fr);
+  gap:30px;
+  align-items:start;
 }
 
 .points-card{
@@ -413,20 +412,18 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 .points-card{
   position:relative;
   perspective:1000px;
-  cursor:pointer;
-  min-height:360px;
-  height:360px;
+  cursor:default;
+  min-height:430px;
+  height:430px;
 }
 
 .card-front,
 .card-back{
   width:100%;
-  height:360px;
+  height:430px;
   box-sizing:border-box;
-
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
-
   transition:transform .6s ease;
 }
 
@@ -441,11 +438,8 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   top:0;
   left:0;
   padding:27px;
-
   transform:rotateY(180deg);
-
   background:rgba(255,255,255,.025);
-
   overflow-y:auto;
 }
 
@@ -711,7 +705,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-<button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
   INSERIR RESULTADO ↗
 </button>
 
@@ -743,11 +737,9 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       SALVAR RESULTADO
     </button>
 
-    <button class="back-button" onclick="flipCard(this.parentElement.parentElement)">
-      ← VOLTAR
-    </button>
-  </div>
-</div>
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
+  INSERIR RESULTADO ↗
+</button>
 
 
 <div class="points-card">
@@ -920,9 +912,9 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <span>POR PRESENTE</span>
     </div>
 
-    <button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
-      INSERIR PRESENTES ↗
-    </button>
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
+  INSERIR PRESENTES ↗
+</button>
 
   </div>
 
@@ -1256,6 +1248,52 @@ async function saveGamePoints(event, button){
   }
 
   alert("Resultado salvo! Pontos adicionados ao placar.");
+
+  card.classList.remove("flipped");
+
+  await loadTeams();
+}
+async function saveGiftPoints(event, button){
+
+  event.stopPropagation();
+
+  const card = button.closest(".points-card");
+
+  const teamSelects = card.querySelectorAll(".gift-team-select");
+  const quantities = card.querySelectorAll(".gift-quantity");
+
+  for(let i = 0; i < teamSelects.length; i++){
+
+    const teamId = Number(teamSelects[i].value);
+    const quantity = Number(quantities[i].value) || 0;
+
+    if(!teamId) continue;
+
+    if(quantity < 0){
+      alert("A quantidade de presentes não pode ser negativa.");
+      return;
+    }
+
+    const team = teams.find(t => t.id === teamId);
+
+    if(!team) continue;
+
+    const pointsToAdd = quantity * 5;
+    const newPoints = team.points + pointsToAdd;
+
+    const {error} = await supabaseClient
+      .from("teams")
+      .update({points:newPoints})
+      .eq("id",teamId);
+
+    if(error){
+      console.error(error);
+      alert("Erro ao salvar o bônus dos presentes.");
+      return;
+    }
+  }
+
+  alert("Bônus dos presentes salvo!");
 
   card.classList.remove("flipped");
 
