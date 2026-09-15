@@ -69,13 +69,77 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 .score{display:flex;align-items:center;gap:18px}.score-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.score-buttons button{border:1px solid rgba(196,161,220,.35);background:rgba(124,68,160,.10);color:#eee8f3;padding:9px 11px;min-width:42px;border-radius:5px;cursor:pointer;font:600 11px 'DM Sans',sans-serif;transition:.18s}.score-buttons button:hover{background:rgba(153,91,194,.30);border-color:rgba(220,190,238,.65);transform:translateY(-1px)}.score-buttons button:active{transform:scale(.96)}
 .score-buttons .minus{border-color:rgba(220,150,170,.35)}.score-buttons button:disabled{opacity:.45;cursor:wait}.team.flash{animation:flash .55s ease}@keyframes flash{0%{background:rgba(150,82,195,.28)}100%{background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035))}}.status{text-align:center;margin:22px auto 0;color:#77707f;font-size:10px;letter-spacing:.15em;min-height:16px}.status.ok{color:#a991b5}.status.error{color:#d08ba1}.reset-wrap{text-align:center;margin-top:24px}.reset{border:0;background:none;color:#625d68;cursor:pointer;font:10px 'DM Sans',sans-serif;letter-spacing:.12em;text-decoration:underline}.games{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .card{
-  padding:27px;border:1px solid rgba(255,255,255,.08);min-height:170px;
-  background:rgba(255,255,255,.025);transition:.25s
+  padding:27px;
+  border:1px solid rgba(255,255,255,.08);
+  min-height:170px;
+  background:rgba(255,255,255,.025);
+  transition:.25s
 }
-.card:hover{transform:translateY(-4px);border-color:rgba(180,132,209,.4)}
-.num{font-size:10px;color:#8d8493;letter-spacing:.2em}
-.card h3{font-family:'Playfair Display';font-size:25px;margin:30px 0 8px}
-.card p{font-size:12px;color:#918a97;line-height:1.6}
+
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(180,132,209,.4)
+}
+
+.num{
+  font-size:10px;
+  color:#8d8493;
+  letter-spacing:.2em
+}
+
+.card h3{
+  font-family:'Playfair Display';
+  font-size:25px;
+  margin:30px 0 8px
+}
+
+.card p{
+  font-size:12px;
+  color:#918a97;
+  line-height:1.6
+}
+
+.rules{
+  display:none;
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.rules.show{
+  display:block;
+}
+
+.rules strong{
+  display:block;
+  color:#c8b1d8;
+  font-size:10px;
+  letter-spacing:.15em;
+  margin-top:14px;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+
+.rules p{
+  font-size:11px;
+  line-height:1.6;
+  color:#918a97;
+}
+
+.rules-button{
+  margin-top:18px;
+  border:0;
+  background:none;
+  color:#b99aca;
+  cursor:pointer;
+  font:600 10px 'DM Sans',sans-serif;
+  letter-spacing:.14em;
+  padding:0;
+}
+
+.rules-button:hover{
+  color:#fff;
+}
 .prizes{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .prize{
   min-height:240px;padding:25px;border:1px solid rgba(255,255,255,.08);
@@ -126,12 +190,111 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 <section id="jogos">
   <div class="title"><small>APRESENTANDO..</small><h2>Os jogos</h2></div>
   <div class="games">
-    <div class="card"><div class="num">01 / 05</div><h3>Beerpong</h3><p>Todos contra todos.</p></div>
-    <div class="card"><div class="num">02 / 05</div><h3>Playlist da Flavinha</h3><p>Será que vocês conhecem os gostos musicais da aniversariante?</p></div>
-    <div class="card"><div class="num">03 / 05</div><h3>Efeito Manada</h3><p>O time com maior sintonia ganha.</p></div>
-    <div class="card"><div class="num">04 / 05</div><h3>Flip Cup</h3><p>Todos contra todos.</p></div>
-    <div class="card"><div class="num">05 / 05</div><h3>Nem a pato</h3><p>Um palpite acima ou duvide do outro time.</p></div>
+  <div class="games">
+
+  <div class="card">
+    <div class="num">01 / 05</div>
+    <h3>Beerpong</h3>
+    <p>Todos contra todos.</p>
+
+    <button class="rules-button" onclick="toggleRules(this)">
+      VER REGRAS →
+    </button>
+
+    <div class="rules">
+      <strong>Como funciona</strong>
+      <p>Cada equipe joga contra todas as outras. O objetivo é acertar a bolinha nos copos da equipe adversária.</p>
+
+      <strong>Como ganha</strong>
+      <p>Vence a equipe que eliminar todos os copos do adversário primeiro.</p>
+
+      <strong>Empate</strong>
+      <p>Rodada extra surpresa.</p>
+    </div>
   </div>
+
+  <div class="card">
+    <div class="num">02 / 05</div>
+    <h3>Playlist da Flavinha</h3>
+    <p>Será que vocês conhecem os gostos musicais da aniversariante?</p>
+
+    <button class="rules-button" onclick="toggleRules(this)">
+      VER REGRAS →
+    </button>
+
+    <div class="rules">
+      <strong>Como funciona</strong>
+      <p>Cada equipe escolhe um integrante para tentar acertar a música. Serão 16 rodadas, com gêneros musicais pré-definidos.</p>
+
+      <strong>Vale</strong>
+      <p>Cantar a letra ou acertar o nome da música.</p>
+
+      <strong>Empate</strong>
+      <p>Rodada extra — vale tudo.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="num">03 / 05</div>
+    <h3>Nem a Pato</h3>
+    <p>Um palpite acima ou duvide do outro time.</p>
+
+    <button class="rules-button" onclick="toggleRules(this)">
+      VER REGRAS →
+    </button>
+
+    <div class="rules">
+      <strong>Como funciona</strong>
+      <p>Todo mundo participa. A cada rodada, uma pergunta é feita e as equipes dão seus palpites em ordem.</p>
+
+      <strong>Nem a Pato!</strong>
+      <p>A qualquer momento, uma equipe pode duvidar da resposta anterior dizendo "NEM A PATO!".</p>
+
+      <strong>Como ganha</strong>
+      <p>Quem errar é eliminado daquela rodada. A equipe que sobreviver até o final vence a rodada.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="num">04 / 05</div>
+    <h3>Flip Cup</h3>
+    <p>Velocidade, bebida e coordenação.</p>
+
+    <button class="rules-button" onclick="toggleRules(this)">
+      VER REGRAS →
+    </button>
+
+    <div class="rules">
+      <strong>Como funciona</strong>
+      <p>Cada integrante precisa beber o conteúdo do copo e, em seguida, virar o copo usando apenas um movimento.</p>
+
+      <strong>Como ganha</strong>
+      <p>Vence a equipe que conseguir terminar todos os copos primeiro.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="num">05 / 05</div>
+    <h3>Efeito Manada</h3>
+    <p>O time com maior sintonia ganha.</p>
+
+    <button class="rules-button" onclick="toggleRules(this)">
+      VER REGRAS →
+    </button>
+
+    <div class="rules">
+      <strong>Como funciona</strong>
+      <p>Todo mundo participa. A cada rodada, uma pergunta é apresentada e cada pessoa responde sem saber o que os outros responderam.</p>
+
+      <strong>Como ganha</strong>
+      <p>A equipe que tiver mais respostas iguais é a mais sincronizada e ganha a rodada.</p>
+
+      <strong>Quem perde?</strong>
+      <p>A equipe menos sincronizada perde a rodada.</p>
+    </div>
+  </div>
+
+</div>
 </section>
 
 <section id="premios">
