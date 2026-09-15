@@ -144,6 +144,50 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   padding:0;
 }
 
+.bonus-instruction{
+  color:#918a97;
+  font-size:10px;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+.gift-team{
+  display:grid;
+  grid-template-columns:1fr 55px;
+  gap:7px;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.gift-team label{
+  margin:0;
+  font-size:8px;
+  color:#817987;
+  letter-spacing:.08em;
+}
+
+.gift-team-select,
+.gift-quantity{
+  width:100%;
+  box-sizing:border-box;
+  padding:8px;
+  background:#17131b;
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;
+  font-family:inherit;
+  font-size:9px;
+  outline:none;
+}
+
+.gift-team-select{
+  grid-column:1;
+}
+
+.gift-quantity{
+  grid-column:2;
+  grid-row:1;
+}
+
 .rules-button:hover{
   color:#fff;
 }
@@ -399,11 +443,23 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   transform:rotateY(0deg);
 }
 
-.flip-hint{
+.flip-button{
   margin-top:25px;
+  padding:9px 14px;
+  background:none;
+  border:1px solid rgba(180,132,209,.35);
+  color:#918a97;
+  font-family:inherit;
   font-size:9px;
-  color:#817987;
   letter-spacing:.12em;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.flip-button:hover{
+  color:#d8bde7;
+  border-color:#b484d1;
+  background:rgba(180,132,209,.08);
 }
 
 .card-back h3{
@@ -629,7 +685,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 
   <div class="points-grid">
 
-<div class="points-card" onclick="flipCard(this)">
+<div class="points-card">
   <div class="card-front">
     <div class="points-number">01</div>
     <h3>Beerpong</h3>
@@ -641,8 +697,9 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-    <div class="flip-hint">CLIQUE PARA INSERIR O RESULTADO ↗</div>
-  </div>
+<button class="flip-button" onclick="flipCard(this)">
+  INSERIR RESULTADO ↗
+</button>
 
   <div class="card-back">
     <div class="points-number">01 · RESULTADO</div>
@@ -679,7 +736,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 </div>
 
 
-<div class="points-card" onclick="flipCard(this)">
+<div class="points-card">
   <div class="card-front">
     <div class="points-number">02</div>
     <h3>Playlist da Flavinha</h3>
@@ -691,8 +748,9 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-    <div class="flip-hint">CLIQUE PARA INSERIR O RESULTADO ↗</div>
-  </div>
+<button class="flip-button" onclick="flipCard(this)">
+  INSERIR RESULTADO ↗
+</button>
 
   <div class="card-back">
     <div class="points-number">02 · RESULTADO</div>
@@ -716,7 +774,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 </div>
 
 
-<div class="points-card" onclick="flipCard(this)">
+<div class="points-card">
   <div class="card-front">
     <div class="points-number">03</div>
     <h3>Nem a Pato</h3>
@@ -728,8 +786,9 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-    <div class="flip-hint">CLIQUE PARA INSERIR O RESULTADO ↗</div>
-  </div>
+<button class="flip-button" onclick="flipCard(this)">
+  INSERIR RESULTADO ↗
+</button>
 
   <div class="card-back">
     <div class="points-number">03 · RESULTADO</div>
@@ -753,7 +812,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 </div>
 
 
-<div class="points-card" onclick="flipCard(this)">
+<div class="points-card">
   <div class="card-front">
     <div class="points-number">04</div>
     <h3>Flip Cup</h3>
@@ -765,8 +824,9 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-    <div class="flip-hint">CLIQUE PARA INSERIR O RESULTADO ↗</div>
-  </div>
+<button class="flip-button" onclick="flipCard(this)">
+  INSERIR RESULTADO ↗
+</button>
 
   <div class="card-back">
     <div class="points-number">04 · RESULTADO</div>
@@ -790,7 +850,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 </div>
 
 
-<div class="points-card" onclick="flipCard(this)">
+<div class="points-card">
   <div class="card-front">
     <div class="points-number">05</div>
     <h3>Efeito Manada</h3>
@@ -802,8 +862,9 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-    <div class="flip-hint">CLIQUE PARA INSERIR O RESULTADO ↗</div>
-  </div>
+<button class="flip-button" onclick="flipCard(this)">
+  INSERIR RESULTADO ↗
+</button>
 
   <div class="card-back">
     <div class="points-number">05 · RESULTADO</div>
@@ -827,21 +888,107 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 </div>
 
 
-    <div class="points-card bonus">
-      <div class="points-number">✦</div>
-      <h3>Bônus dos presentes</h3>
+<div class="points-card bonus">
 
-      <p>
-        Cada integrante que levar um presente
-        garante <strong>+5 pontos</strong> para sua equipe.
-      </p>
+  <div class="card-front">
 
-      <div class="bonus-highlight">
-        +5 <span>POR PRESENTE</span>
-      </div>
+    <div class="points-number">✦</div>
+
+    <h3>Bônus dos presentes</h3>
+
+    <p>
+      Cada integrante que levar um presente garante
+      <strong>+5 pontos</strong> para sua equipe.
+    </p>
+
+    <div class="bonus-highlight">
+      +5
+      <span>POR PRESENTE</span>
     </div>
 
+    <button class="flip-button" onclick="flipCard(this)">
+      INSERIR PRESENTES ↗
+    </button>
+
   </div>
+
+
+  <div class="card-back">
+
+    <div class="points-number">✦ · BÔNUS</div>
+
+    <h3>Presentes</h3>
+
+    <p class="bonus-instruction">
+      Coloque quantos presentes cada equipe trouxe.
+    </p>
+
+    <div class="gift-team">
+      <label>TIME 1</label>
+      <select class="gift-team-select"></select>
+
+      <input
+        type="number"
+        class="gift-quantity"
+        min="0"
+        value="0"
+        placeholder="0"
+      >
+    </div>
+
+    <div class="gift-team">
+      <label>TIME 2</label>
+      <select class="gift-team-select"></select>
+
+      <input
+        type="number"
+        class="gift-quantity"
+        min="0"
+        value="0"
+        placeholder="0"
+      >
+    </div>
+
+    <div class="gift-team">
+      <label>TIME 3</label>
+      <select class="gift-team-select"></select>
+
+      <input
+        type="number"
+        class="gift-quantity"
+        min="0"
+        value="0"
+        placeholder="0"
+      >
+    </div>
+
+    <div class="gift-team">
+      <label>TIME 4</label>
+      <select class="gift-team-select"></select>
+
+      <input
+        type="number"
+        class="gift-quantity"
+        min="0"
+        value="0"
+        placeholder="0"
+      >
+    </div>
+
+    <button class="save-points" onclick="saveGiftPoints(event, this)">
+      SALVAR BÔNUS
+    </button>
+
+    <button
+      class="back-button"
+      onclick="flipCard(this.parentElement.parentElement)"
+    >
+      ← VOLTAR
+    </button>
+
+  </div>
+
+</div>
 
 </section>
   
@@ -1006,6 +1153,8 @@ function togglePrize(button){
 }
 
 function populateTeamSelects(card){
+
+  // Cards de jogos
   const selects = card.querySelectorAll(".position-team");
 
   selects.forEach(select => {
@@ -1023,6 +1172,27 @@ function populateTeamSelects(card){
 
     select.value = currentValue;
   });
+
+
+  // Card de presentes
+  const giftSelects = card.querySelectorAll(".gift-team-select");
+
+  giftSelects.forEach(select => {
+
+    const currentValue = select.value;
+
+    select.innerHTML = `
+      <option value="">Time</option>
+      ${teams.map(team => `
+        <option value="${team.id}">
+          ${team.name.toUpperCase()}
+        </option>
+      `).join('')}
+    `;
+
+    select.value = currentValue;
+  });
+
 }
 
 async function saveGamePoints(event, button){
