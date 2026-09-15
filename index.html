@@ -160,14 +160,15 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 }
 
 .gift-team label{
-  margin:0;
+  grid-column:1 / -1;
+  margin:0 0 2px;
   font-size:8px;
   color:#817987;
   letter-spacing:.08em;
 }
 
-.gift-team-select,
-.gift-quantity{
+.gift-team-select{
+  grid-column:1;
   width:100%;
   box-sizing:border-box;
   padding:8px;
@@ -179,13 +180,18 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   outline:none;
 }
 
-.gift-team-select{
-  grid-column:1;
-}
-
 .gift-quantity{
   grid-column:2;
-  grid-row:1;
+  grid-row:2;
+  width:100%;
+  box-sizing:border-box;
+  padding:8px;
+  background:#17131b;
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;
+  font-family:inherit;
+  font-size:9px;
+  outline:none;
 }
 
 .rules-button:hover{
@@ -705,7 +711,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-<button class="flip-button" onclick="flipCard(this)">
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
   INSERIR RESULTADO ↗
 </button>
 
@@ -756,7 +762,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-<button class="flip-button" onclick="flipCard(this)">
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
   INSERIR RESULTADO ↗
 </button>
 
@@ -794,7 +800,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-<button class="flip-button" onclick="flipCard(this)">
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
   INSERIR RESULTADO ↗
 </button>
 
@@ -832,7 +838,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-<button class="flip-button" onclick="flipCard(this)">
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
   INSERIR RESULTADO ↗
 </button>
 
@@ -870,7 +876,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <div><span>4º lugar</span><strong>5 pts</strong></div>
     </div>
 
-<button class="flip-button" onclick="flipCard(this)">
+<button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
   INSERIR RESULTADO ↗
 </button>
 
@@ -914,7 +920,7 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
       <span>POR PRESENTE</span>
     </div>
 
-    <button class="flip-button" onclick="flipCard(this)">
+    <button class="flip-button" onclick="flipCard(this.closest('.points-card'))"
       INSERIR PRESENTES ↗
     </button>
 
