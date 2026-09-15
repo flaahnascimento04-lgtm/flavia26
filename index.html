@@ -231,6 +231,131 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 .prize-button:hover{
   color:#fff;
 }
+.points-intro{
+  max-width:650px;
+  margin:-25px auto 45px;
+  text-align:center;
+}
+
+.points-intro p{
+  color:#918a97;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.points-grid{
+  max-width:1050px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.points-card{
+  padding:27px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  transition:.25s;
+}
+
+.points-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(180,132,209,.4);
+}
+
+.points-number{
+  font-size:10px;
+  color:#8d8493;
+  letter-spacing:.2em;
+}
+
+.points-card h3{
+  font-family:'Playfair Display';
+  font-size:25px;
+  margin:25px 0 20px;
+}
+
+.points-ranking div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:11px;
+  color:#918a97;
+}
+
+.points-ranking div:last-child{
+  border-bottom:none;
+}
+
+.points-ranking strong{
+  color:#d8bde7;
+  font-size:12px;
+}
+
+.points-card.bonus{
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.045),
+    rgba(102,51,132,.10)
+  );
+}
+
+.points-card.bonus p{
+  color:#918a97;
+  font-size:11px;
+  line-height:1.7;
+}
+
+.points-card.bonus p strong{
+  color:#d8bde7;
+}
+
+.bonus-highlight{
+  margin-top:25px;
+  font-size:35px;
+  font-weight:700;
+  color:#d8bde7;
+}
+
+.bonus-highlight span{
+  display:block;
+  margin-top:4px;
+  font-size:9px;
+  color:#817987;
+  letter-spacing:.15em;
+}
+
+.points-total{
+  max-width:1050px;
+  margin:45px auto 0;
+  padding:30px;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.points-total small{
+  display:block;
+  font-size:9px;
+  color:#817987;
+  letter-spacing:.2em;
+}
+
+.points-total strong{
+  display:block;
+  margin-top:8px;
+  font-family:'Playfair Display';
+  font-size:38px;
+  color:#d8bde7;
+}
+
+.points-total p{
+  margin-top:7px;
+  color:#817987;
+  font-size:10px;
+}  
 footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacing:.2em;border-top:1px solid rgba(255,255,255,.06)}
 @media(max-width:700px){
   .points-grid{
@@ -481,14 +606,6 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 
   </div>
 
-  <div class="points-total">
-    <small>PONTUAÇÃO MÁXIMA NOS JOGOS</small>
-    <strong>100 PONTOS</strong>
-    <p>
-      + 5 pontos por cada presente levado
-    </p>
-  </div>
-
 </section>
   
 
@@ -567,131 +684,6 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
 
   </div>
 
-.points-intro{
-  max-width:650px;
-  margin:-25px auto 45px;
-  text-align:center;
-}
-
-.points-intro p{
-  color:#918a97;
-  font-size:12px;
-  line-height:1.7;
-}
-
-.points-grid{
-  max-width:1050px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.points-card{
-  padding:27px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.025);
-  transition:.25s;
-}
-
-.points-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(180,132,209,.4);
-}
-
-.points-number{
-  font-size:10px;
-  color:#8d8493;
-  letter-spacing:.2em;
-}
-
-.points-card h3{
-  font-family:'Playfair Display';
-  font-size:25px;
-  margin:25px 0 20px;
-}
-
-.points-ranking div{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  font-size:11px;
-  color:#918a97;
-}
-
-.points-ranking div:last-child{
-  border-bottom:none;
-}
-
-.points-ranking strong{
-  color:#d8bde7;
-  font-size:12px;
-}
-
-.points-card.bonus{
-  background:linear-gradient(
-    145deg,
-    rgba(255,255,255,.045),
-    rgba(102,51,132,.10)
-  );
-}
-
-.points-card.bonus p{
-  color:#918a97;
-  font-size:11px;
-  line-height:1.7;
-}
-
-.points-card.bonus p strong{
-  color:#d8bde7;
-}
-
-.bonus-highlight{
-  margin-top:25px;
-  font-size:35px;
-  font-weight:700;
-  color:#d8bde7;
-}
-
-.bonus-highlight span{
-  display:block;
-  margin-top:4px;
-  font-size:9px;
-  color:#817987;
-  letter-spacing:.15em;
-}
-
-.points-total{
-  max-width:1050px;
-  margin:45px auto 0;
-  padding:30px;
-  text-align:center;
-  border-top:1px solid rgba(255,255,255,.08);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.points-total small{
-  display:block;
-  font-size:9px;
-  color:#817987;
-  letter-spacing:.2em;
-}
-
-.points-total strong{
-  display:block;
-  margin-top:8px;
-  font-family:'Playfair Display';
-  font-size:38px;
-  color:#d8bde7;
-}
-
-.points-total p{
-  margin-top:7px;
-  color:#817987;
-  font-size:10px;
-}
 </section>
 
 <footer>ANIVERSÁRIO DA FLAVIA · 2026</footer>
