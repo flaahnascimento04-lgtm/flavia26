@@ -1168,7 +1168,9 @@ function togglePrize(button){
     button.textContent = 'VER PRÊMIOS →';
   }
 }
-  function flipCard(card){
+function flipCard(card){
+  if(!card || !card.classList.contains("points-card")) return;
+
   card.classList.toggle("flipped");
 
   if(card.classList.contains("flipped")){
