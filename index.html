@@ -367,7 +367,18 @@ async function resetScores(){
 supabaseClient.channel('teams-live')
   .on('postgres_changes',{event:'*',schema:'public',table:'teams'},()=>loadTeams())
   .subscribe(status=>{ if(status==='SUBSCRIBED') console.log('Placar em tempo real conectado.'); });
+  
+function toggleRules(button){
+  const rules = button.nextElementSibling;
 
+  rules.classList.toggle('show');
+
+  if(rules.classList.contains('show')){
+    button.textContent = 'ESCONDER REGRAS ↑';
+  }else{
+    button.textContent = 'VER REGRAS →';
+  }
+}
 loadTeams();
 </script>
 </body>
