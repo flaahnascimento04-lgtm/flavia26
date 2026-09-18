@@ -1,73 +1,315 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aniversário da Flavia</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  background:#08070b;color:#f5f2f8;font-family:'DM Sans',sans-serif;
-  min-height:100vh;overflow-x:hidden;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#08070b;
+  color:#f5f2f8;
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
 body:before{
-  content:"";position:fixed;inset:-20%;pointer-events:none;
+  content:"";
+  position:fixed;
+  inset:-20%;
+  pointer-events:none;
   background:
     radial-gradient(circle at 50% 15%,rgba(133,74,190,.20),transparent 28%),
     radial-gradient(circle at 15% 75%,rgba(82,39,119,.13),transparent 25%),
     radial-gradient(circle at 85% 65%,rgba(164,112,211,.09),transparent 25%);
 }
+
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:10;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:24px 6vw;border-bottom:1px solid rgba(255,255,255,.08);
-  background:rgba(8,7,11,.72);backdrop-filter:blur(16px);
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:24px 6vw;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(8,7,11,.72);
+  backdrop-filter:blur(16px);
 }
-.logo{font-weight:700;letter-spacing:.16em;font-size:13px}
-nav a{color:#aaa4b1;text-decoration:none;font-size:12px;letter-spacing:.13em;margin-left:28px}
-nav a:hover{color:#fff}
-section{position:relative;z-index:1;min-height:100vh;padding:130px 7vw 70px}
-.hero{display:flex;align-items:center;justify-content:center;text-align:center}
-.kicker{font-size:11px;letter-spacing:.42em;color:#aaa1b4;margin-bottom:26px}
+
+.logo{
+  font-weight:700;
+  letter-spacing:.16em;
+  font-size:13px;
+}
+
+nav a{
+  color:#aaa4b1;
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:.13em;
+  margin-left:28px;
+}
+
+nav a:hover{
+  color:#fff;
+}
+
+section{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  padding:130px 7vw 70px;
+}
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.kicker{
+  font-size:11px;
+  letter-spacing:.42em;
+  color:#aaa1b4;
+  margin-bottom:26px;
+}
+
 h1{
-  font-family:'Playfair Display',serif;font-size:clamp(76px,15vw,190px);
-  line-height:.78;font-weight:600;letter-spacing:-.07em;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(76px,15vw,190px);
+  line-height:.78;
+  font-weight:600;
+  letter-spacing:-.07em;
 }
-h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20vw,245px);
-  font-weight:700;letter-spacing:-.12em;margin-left:-.06em;
+
+h1 span{
+  display:block;
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(100px,20vw,245px);
+  font-weight:700;
+  letter-spacing:-.12em;
+  margin-left:-.06em;
   background:linear-gradient(140deg,#fff 15%,#c8b1d8 45%,#73429a 85%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
 }
-.date{margin-top:36px;font-size:12px;letter-spacing:.38em;color:#bdb5c3}
-.tag{margin-top:15px;color:#8e8795;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+
+.date{
+  margin-top:36px;
+  font-size:12px;
+  letter-spacing:.38em;
+  color:#bdb5c3;
+}
+
+.tag{
+  margin-top:15px;
+  color:#8e8795;
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
 .btn{
-  display:inline-flex;margin-top:38px;padding:14px 25px;border:1px solid rgba(196,161,220,.5);
-  color:#eee8f3;text-decoration:none;font-size:11px;letter-spacing:.18em;
-  transition:.25s;background:rgba(124,68,160,.08)
+  display:inline-flex;
+  margin-top:38px;
+  padding:14px 25px;
+  border:1px solid rgba(196,161,220,.5);
+  color:#eee8f3;
+  text-decoration:none;
+  font-size:11px;
+  letter-spacing:.18em;
+  transition:.25s;
+  background:rgba(124,68,160,.08);
 }
-.btn:hover{background:rgba(124,68,160,.2);transform:translateY(-2px)}
-.title{text-align:center;margin-bottom:55px}
-.title small{font-size:10px;letter-spacing:.35em;color:#8f8795}
-.title h2{font-family:'Playfair Display',serif;font-size:52px;font-weight:500;margin-top:10px}
-.scoreboard{max-width:900px;margin:auto}
+
+.btn:hover{
+  background:rgba(124,68,160,.2);
+  transform:translateY(-2px);
+}
+
+.title{
+  text-align:center;
+  margin-bottom:55px;
+}
+
+.title small{
+  font-size:10px;
+  letter-spacing:.35em;
+  color:#8f8795;
+}
+
+.title h2{
+  font-family:'Playfair Display',serif;
+  font-size:52px;
+  font-weight:500;
+  margin-top:10px;
+}
+
+.scoreboard{
+  max-width:900px;
+  margin:auto;
+}
+
 .team{
-  display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:20px;
-  padding:23px 25px;margin:10px 0;border:1px solid rgba(255,255,255,.08);
+  display:grid;
+  grid-template-columns:70px 1fr auto;
+  align-items:center;
+  gap:20px;
+  padding:23px 25px;
+  margin:10px 0;
+  border:1px solid rgba(255,255,255,.08);
   background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035));
 }
-.team.first{border-color:rgba(183,137,211,.45);box-shadow:0 0 35px rgba(111,52,145,.12)}
-.rank{font-family:'Playfair Display';font-size:30px;color:#aaa}
-.team.first .rank{color:#d8bde7}
-.teamname{font-weight:600;letter-spacing:.08em}
-.sub{font-size:10px;color:#7f7885;margin-top:5px;letter-spacing:.12em}
-.points{font-size:36px;font-weight:700}
-.pts{font-size:10px;color:#817987;letter-spacing:.12em}
-.score{display:flex;align-items:center;gap:18px}.score-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.score-buttons button{border:1px solid rgba(196,161,220,.35);background:rgba(124,68,160,.10);color:#eee8f3;padding:9px 11px;min-width:42px;border-radius:5px;cursor:pointer;font:600 11px 'DM Sans',sans-serif;transition:.18s}.score-buttons button:hover{background:rgba(153,91,194,.30);border-color:rgba(220,190,238,.65);transform:translateY(-1px)}.score-buttons button:active{transform:scale(.96)}
-.score-buttons .minus{border-color:rgba(220,150,170,.35)}.score-buttons button:disabled{opacity:.45;cursor:wait}.team.flash{animation:flash .55s ease}@keyframes flash{0%{background:rgba(150,82,195,.28)}100%{background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035))}}.status{text-align:center;margin:22px auto 0;color:#77707f;font-size:10px;letter-spacing:.15em;min-height:16px}.status.ok{color:#a991b5}.status.error{color:#d08ba1}.reset-wrap{text-align:center;margin-top:24px}.reset{border:0;background:none;color:#625d68;cursor:pointer;font:10px 'DM Sans',sans-serif;letter-spacing:.12em;text-decoration:underline}.games{
+
+.team.first{
+  border-color:rgba(183,137,211,.45);
+  box-shadow:0 0 35px rgba(111,52,145,.12);
+}
+
+.rank{
+  font-family:'Playfair Display';
+  font-size:30px;
+  color:#aaa;
+}
+
+.team.first .rank{
+  color:#d8bde7;
+}
+
+.teamname{
+  font-weight:600;
+  letter-spacing:.08em;
+}
+
+.sub{
+  font-size:10px;
+  color:#7f7885;
+  margin-top:5px;
+  letter-spacing:.12em;
+}
+
+.points{
+  font-size:36px;
+  font-weight:700;
+}
+
+.pts{
+  font-size:10px;
+  color:#817987;
+  letter-spacing:.12em;
+}
+
+.score{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.score-buttons{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.score-buttons button{
+  border:1px solid rgba(196,161,220,.35);
+  background:rgba(124,68,160,.10);
+  color:#eee8f3;
+  padding:9px 11px;
+  min-width:42px;
+  border-radius:5px;
+  cursor:pointer;
+  font:600 11px 'DM Sans',sans-serif;
+  transition:.18s;
+}
+
+.score-buttons button:hover{
+  background:rgba(153,91,194,.30);
+  border-color:rgba(220,190,238,.65);
+  transform:translateY(-1px);
+}
+
+.score-buttons button:active{
+  transform:scale(.96);
+}
+
+.score-buttons .minus{
+  border-color:rgba(220,150,170,.35);
+}
+
+.score-buttons button:disabled{
+  opacity:.45;
+  cursor:wait;
+}
+
+.team.flash{
+  animation:flash .55s ease;
+}
+
+@keyframes flash{
+  0%{
+    background:rgba(150,82,195,.28);
+  }
+  100%{
+    background:linear-gradient(110deg,rgba(255,255,255,.045),rgba(123,64,157,.035));
+  }
+}
+
+.status{
+  text-align:center;
+  margin:22px auto 0;
+  color:#77707f;
+  font-size:10px;
+  letter-spacing:.15em;
+  min-height:16px;
+}
+
+.status.ok{
+  color:#a991b5;
+}
+
+.status.error{
+  color:#d08ba1;
+}
+
+.reset-wrap{
+  text-align:center;
+  margin-top:24px;
+}
+
+.reset{
+  border:0;
+  background:none;
+  color:#625d68;
+  cursor:pointer;
+  font:10px 'DM Sans',sans-serif;
+  letter-spacing:.12em;
+  text-decoration:underline;
+}
+
+.games{
   width:100%;
   max-width:1050px;
   margin:auto;
@@ -75,35 +317,36 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:18px;
 }
+
 .card{
   padding:27px;
   border:1px solid rgba(255,255,255,.08);
   min-height:170px;
   background:rgba(255,255,255,.025);
-  transition:.25s
+  transition:.25s;
 }
 
 .card:hover{
   transform:translateY(-4px);
-  border-color:rgba(180,132,209,.4)
+  border-color:rgba(180,132,209,.4);
 }
 
 .num{
   font-size:10px;
   color:#8d8493;
-  letter-spacing:.2em
+  letter-spacing:.2em;
 }
 
 .card h3{
   font-family:'Playfair Display';
   font-size:25px;
-  margin:30px 0 8px
+  margin:30px 0 8px;
 }
 
 .card p{
   font-size:12px;
   color:#918a97;
-  line-height:1.6
+  line-height:1.6;
 }
 
 .rules{
@@ -142,6 +385,10 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   font:600 10px 'DM Sans',sans-serif;
   letter-spacing:.14em;
   padding:0;
+}
+
+.rules-button:hover{
+  color:#fff;
 }
 
 .bonus-instruction{
@@ -194,9 +441,6 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   outline:none;
 }
 
-.rules-button:hover{
-  color:#fff;
-}
 .prizes{
   max-width:1050px;
   margin:auto;
@@ -281,6 +525,7 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
 .prize-button:hover{
   color:#fff;
 }
+
 .points-intro{
   max-width:650px;
   margin:-25px auto 45px;
@@ -300,16 +545,54 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   align-items:start;
 }
 
+/* =========================================
+   CARDS DE PONTUAÇÃO
+========================================= */
+
 .points-card{
-  padding:27px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.025);
-  transition:.25s;
+  position:relative;
+  perspective:1000px;
+  cursor:default;
+  height:430px;
+  min-height:430px;
 }
 
-.points-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(180,132,209,.4);
+.card-front,
+.card-back{
+  width:100%;
+  height:430px;
+  box-sizing:border-box;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  transition:transform .6s ease;
+}
+
+.card-front{
+  position:relative;
+  padding:27px;
+  transform:rotateY(0deg);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+}
+
+.card-back{
+  position:absolute;
+  top:0;
+  left:0;
+  padding:27px;
+  transform:rotateY(180deg);
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.08);
+  overflow-y:auto;
+}
+
+.points-card.flipped .card-front{
+  transform:rotateY(-180deg);
+}
+
+.points-card.flipped .card-back{
+  transform:rotateY(0deg);
 }
 
 .points-number{
@@ -343,7 +626,157 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   font-size:12px;
 }
 
+/* =========================================
+   BOTÃO DO CARD
+========================================= */
+
+.flip-button{
+  position:absolute;
+  left:27px;
+  bottom:142px;
+  margin:0;
+  padding:9px 14px;
+  background:none;
+  border:1px solid rgba(180,132,209,.35);
+  color:#918a97;
+  font-family:inherit;
+  font-size:9px;
+  letter-spacing:.12em;
+  cursor:pointer;
+  transition:.25s;
+  z-index:6;
+}
+
+.flip-button:hover{
+  color:#d8bde7;
+  border-color:#b484d1;
+  background:rgba(180,132,209,.08);
+}
+
+/* =========================================
+   RESULTADO SALVO
+   FICA FIXO E NÃO ALTERA O LAYOUT
+========================================= */
+
+.saved-result{
+  position:absolute;
+  left:27px;
+  right:27px;
+  bottom:16px;
+  height:115px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.07);
+  overflow:hidden;
+  z-index:5;
+  background:rgba(8,7,11,.18);
+}
+
+.saved-title{
+  font-size:8px;
+  letter-spacing:.15em;
+  color:#817987;
+  margin-bottom:4px;
+}
+
+.saved-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  height:17px;
+  padding:0;
+  font-size:9px;
+  color:#918a97;
+}
+
+.saved-line strong{
+  color:#d8bde7;
+  font-size:9px;
+}
+
+.edit-result-button{
+  display:block;
+  margin-top:5px;
+  border:0;
+  background:none;
+  color:#b99aca;
+  cursor:pointer;
+  font:600 9px 'DM Sans',sans-serif;
+  letter-spacing:.12em;
+  padding:0;
+}
+
+.edit-result-button:hover{
+  color:#fff;
+}
+
+/* =========================================
+   CARD TRASEIRO
+========================================= */
+
+.card-back h3{
+  margin:15px 0 18px;
+}
+
+.card-back label{
+  display:block;
+  margin-top:10px;
+  margin-bottom:5px;
+  font-size:9px;
+  color:#918a97;
+  letter-spacing:.08em;
+}
+
+.position-team{
+  width:100%;
+  padding:9px 10px;
+  background:#17131b;
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;
+  font-family:inherit;
+  font-size:10px;
+  outline:none;
+}
+
+.position-team:focus{
+  border-color:#b484d1;
+}
+
+.save-points{
+  width:100%;
+  margin-top:18px;
+  padding:10px;
+  border:1px solid rgba(180,132,209,.5);
+  background:rgba(180,132,209,.12);
+  color:#d8bde7;
+  font-size:9px;
+  letter-spacing:.12em;
+  cursor:pointer;
+}
+
+.save-points:hover{
+  background:rgba(180,132,209,.22);
+}
+
+.back-button{
+  display:block;
+  margin:12px auto 0;
+  background:none;
+  border:none;
+  color:#817987;
+  font-size:9px;
+  letter-spacing:.1em;
+  cursor:pointer;
+}
+
 .points-card.bonus{
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.045),
+    rgba(102,51,132,.10)
+  );
+}
+
+.points-card.bonus .card-front{
   background:linear-gradient(
     145deg,
     rgba(255,255,255,.045),
@@ -404,195 +837,89 @@ h1 span{display:block;font-family:'DM Sans',sans-serif;font-size:clamp(100px,20v
   margin-top:7px;
   color:#817987;
   font-size:10px;
-}  
-/* =========================
-   CARDS DE PONTUAÇÃO
-========================= */
-
-.points-card{
-  position:relative;
-  perspective:1000px;
-  cursor:default;
-  min-height:430px;
-  height:430px;
 }
 
-.card-front,
-.card-back{
-  width:100%;
-  height:430px;
-  box-sizing:border-box;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  transition:transform .6s ease;
-}
-
-.card-front{
-  position:relative;
-  padding:27px;
-  padding-bottom:155px;
-  transform:rotateY(0deg);
-  overflow:hidden;
-}
-
-.card-back{
-  position:absolute;
-  top:0;
-  left:0;
-  padding:27px;
-  transform:rotateY(180deg);
-  background:rgba(255,255,255,.025);
-  overflow-y:auto;
-}
-
-.points-card.flipped .card-front{
-  transform:rotateY(-180deg);
-}
-
-.points-card.flipped .card-back{
-  transform:rotateY(0deg);
-}
-
-.flip-button{
-  position:absolute;
-  left:27px;
-  bottom:125px;
-  margin:0;
-  padding:9px 14px;
-  background:none;
-  border:1px solid rgba(180,132,209,.35);
-  color:#918a97;
-  font-family:inherit;
-  font-size:9px;
-  letter-spacing:.12em;
-  cursor:pointer;
-  transition:.25s;
-}
-
-.flip-button:hover{
-  color:#d8bde7;
-  border-color:#b484d1;
-  background:rgba(180,132,209,.08);
-}
-
-.card-back h3{
-  margin:15px 0 18px;
-}
-
-.card-back label{
-  display:block;
-  margin-top:10px;
-  margin-bottom:5px;
-  font-size:9px;
-  color:#918a97;
-  letter-spacing:.08em;
-}
-
-.position-team{
-  width:100%;
-  padding:9px 10px;
-  background:#17131b;
-  border:1px solid rgba(255,255,255,.1);
-  color:#fff;
-  font-family:inherit;
+footer{
+  text-align:center;
+  padding:45px;
+  color:#625d68;
   font-size:10px;
-  outline:none;
+  letter-spacing:.2em;
+  border-top:1px solid rgba(255,255,255,.06);
 }
 
-.position-team:focus{
-  border-color:#b484d1;
-}
+/* =========================================
+   MOBILE
+========================================= */
 
-.save-points{
-  width:100%;
-  margin-top:18px;
-  padding:10px;
-  border:1px solid rgba(180,132,209,.5);
-  background:rgba(180,132,209,.12);
-  color:#d8bde7;
-  font-size:9px;
-  letter-spacing:.12em;
-  cursor:pointer;
-}
-
-.save-points:hover{
-  background:rgba(180,132,209,.22);
-}
-
-.back-button{
-  display:block;
-  margin:12px auto 0;
-  background:none;
-  border:none;
-  color:#817987;
-  font-size:9px;
-  letter-spacing:.1em;
-  cursor:pointer;
-}
-
-  .saved-result{
-  position:absolute;
-  left:27px;
-  right:27px;
-  bottom:18px;
-  padding-top:12px;
-  border-top:1px solid rgba(255,255,255,.07);
-  background:rgba(8,7,11,.35);
-}
-
-.saved-title{
-  font-size:8px;
-  letter-spacing:.15em;
-  color:#817987;
-  margin-bottom:8px;
-}
-
-.saved-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:5px 0;
-  font-size:9px;
-  color:#918a97;
-}
-
-.saved-line strong{
-  color:#d8bde7;
-  font-size:9px;
-}
-
-.edit-result-button{
-  margin-top:12px;
-  border:0;
-  background:none;
-  color:#b99aca;
-  cursor:pointer;
-  font:600 9px 'DM Sans',sans-serif;
-  letter-spacing:.12em;
-  padding:0;
-}
-
-.edit-result-button:hover{
-  color:#fff;
-}
-footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacing:.2em;border-top:1px solid rgba(255,255,255,.06)}
 @media(max-width:700px){
+
   .points-grid{
-  grid-template-columns:1fr;
-}
- nav{padding:20px 5vw}nav div:last-child{display:none}
-  
- section{padding:110px 5vw 60px}
- h1{font-size:72px}h1 span{font-size:120px}
- .games,.prizes{grid-template-columns:1fr}
- .team{grid-template-columns:40px 1fr;padding:18px 14px}.score{grid-column:2;justify-content:space-between;align-items:center}.score-buttons{justify-content:flex-start}
- .points{font-size:28px}.title h2{font-size:42px}
+    grid-template-columns:1fr;
+  }
+
+  nav{
+    padding:20px 5vw;
+  }
+
+  nav div:last-child{
+    display:none;
+  }
+
+  section{
+    padding:110px 5vw 60px;
+  }
+
+  h1{
+    font-size:72px;
+  }
+
+  h1 span{
+    font-size:120px;
+  }
+
+  .games,
+  .prizes{
+    grid-template-columns:1fr;
+  }
+
+  .team{
+    grid-template-columns:40px 1fr;
+    padding:18px 14px;
+  }
+
+  .score{
+    grid-column:2;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .score-buttons{
+    justify-content:flex-start;
+  }
+
+  .points{
+    font-size:28px;
+  }
+
+  .title h2{
+    font-size:42px;
+  }
+
+  .points-card{
+    height:430px;
+    min-height:430px;
+  }
+
 }
 </style>
 </head>
+
 <body>
+
 <nav>
   <div class="logo">NOITE DE JOGOS</div>
+
   <div>
     <a href="#placar">PLACAR</a>
     <a href="#jogos">JOGOS</a>
@@ -601,622 +928,1408 @@ footer{text-align:center;padding:45px;color:#625d68;font-size:10px;letter-spacin
   </div>
 </nav>
 
+
 <section class="hero">
+
   <div>
-    <div class="kicker">NOITE DE JOGOS</div>
-    <h1>FLAVIA<span>26</span></h1>
-    <div class="date">26 · 09 · 2026</div>
-    <div class="tag">BOA SORTE</div>
-    <a class="btn" href="#placar">VER O PLACAR</a>
+
+    <div class="kicker">
+      NOITE DE JOGOS
+    </div>
+
+    <h1>
+      FLAVIA
+      <span>26</span>
+    </h1>
+
+    <div class="date">
+      26 · 09 · 2026
+    </div>
+
+    <div class="tag">
+      BOA SORTE
+    </div>
+
+    <a class="btn" href="#placar">
+      VER O PLACAR
+    </a>
+
   </div>
+
 </section>
+
 
 <section id="placar">
-  <div class="title"><small>PLACAR AO VIVO</small><h2>Quem vai levar?</h2></div>
+
+  <div class="title">
+    <small>PLACAR AO VIVO</small>
+    <h2>Quem vai levar?</h2>
+  </div>
+
   <div class="scoreboard" id="scoreboard"></div>
-  <div class="status" id="status">CONECTANDO AO PLACAR...</div>
-  <div class="reset-wrap"><button class="reset" onclick="resetScores()">ZERAR PLACAR</button></div>
+
+  <div class="status" id="status">
+    CONECTANDO AO PLACAR...
+  </div>
+
+  <div class="reset-wrap">
+    <button class="reset" onclick="resetScores()">
+      ZERAR PLACAR
+    </button>
+  </div>
+
 </section>
+
 
 <section id="jogos">
-  <div class="title"><small>APRESENTANDO..</small><h2>Os jogos</h2></div>
+
+  <div class="title">
+    <small>APRESENTANDO..</small>
+    <h2>Os jogos</h2>
+  </div>
+
   <div class="games">
 
-  <div class="card">
-    <div class="num">01 / 05</div>
-    <h3>Beerpong</h3>
-    <p>Todos contra todos.</p>
 
-    <button class="rules-button" onclick="toggleRules(this)">
-      VER REGRAS →
-    </button>
+    <div class="card">
 
-    <div class="rules">
-      <strong>Como funciona</strong>
-      <p>Cada equipe joga contra todas as outras. O objetivo é acertar a bolinha nos copos da equipe adversária.</p>
+      <div class="num">
+        01 / 05
+      </div>
 
-      <strong>Como ganha</strong>
-      <p>Vence a equipe que eliminar todos os copos do adversário primeiro.</p>
+      <h3>
+        Beerpong
+      </h3>
 
-      <strong>Empate</strong>
-      <p>Rodada extra surpresa.</p>
+      <p>
+        Todos contra todos.
+      </p>
+
+      <button class="rules-button" onclick="toggleRules(this)">
+        VER REGRAS →
+      </button>
+
+      <div class="rules">
+
+        <strong>
+          Como funciona
+        </strong>
+
+        <p>
+          Cada equipe joga contra todas as outras.
+          O objetivo é acertar a bolinha nos copos
+          da equipe adversária.
+        </p>
+
+        <strong>
+          Como ganha
+        </strong>
+
+        <p>
+          Vence a equipe que eliminar todos os copos
+          do adversário primeiro.
+        </p>
+
+        <strong>
+          Empate
+        </strong>
+
+        <p>
+          Rodada extra surpresa.
+        </p>
+
+      </div>
+
     </div>
+
+
+    <div class="card">
+
+      <div class="num">
+        02 / 05
+      </div>
+
+      <h3>
+        Playlist da Flavinha
+      </h3>
+
+      <p>
+        Será que vocês conhecem os gostos musicais
+        da aniversariante?
+      </p>
+
+      <button class="rules-button" onclick="toggleRules(this)">
+        VER REGRAS →
+      </button>
+
+      <div class="rules">
+
+        <strong>
+          Como funciona
+        </strong>
+
+        <p>
+          Cada equipe escolhe um integrante para tentar
+          acertar a música. Serão 16 rodadas,
+          com gêneros musicais pré-definidos.
+        </p>
+
+        <strong>
+          Vale
+        </strong>
+
+        <p>
+          Cantar a letra ou acertar o nome da música.
+        </p>
+
+        <strong>
+          Empate
+        </strong>
+
+        <p>
+          Rodada extra — vale tudo.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="num">
+        03 / 05
+      </div>
+
+      <h3>
+        Nem a Pato
+      </h3>
+
+      <p>
+        Um palpite acima ou duvide do outro time.
+      </p>
+
+      <button class="rules-button" onclick="toggleRules(this)">
+        VER REGRAS →
+      </button>
+
+      <div class="rules">
+
+        <strong>
+          Como funciona
+        </strong>
+
+        <p>
+          Todo mundo participa. A cada rodada,
+          uma pergunta é feita e as equipes dão
+          seus palpites em ordem.
+        </p>
+
+        <strong>
+          Nem a Pato!
+        </strong>
+
+        <p>
+          A qualquer momento, uma equipe pode duvidar
+          da resposta anterior dizendo "NEM A PATO!".
+        </p>
+
+        <strong>
+          Como ganha
+        </strong>
+
+        <p>
+          Quem errar é eliminado daquela rodada.
+          A equipe que sobreviver até o final vence
+          a rodada.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="num">
+        04 / 05
+      </div>
+
+      <h3>
+        Flip Cup
+      </h3>
+
+      <p>
+        Velocidade, bebida e coordenação.
+      </p>
+
+      <button class="rules-button" onclick="toggleRules(this)">
+        VER REGRAS →
+      </button>
+
+      <div class="rules">
+
+        <strong>
+          Como funciona
+        </strong>
+
+        <p>
+          Cada integrante precisa beber o conteúdo
+          do copo e, em seguida, virar o copo usando
+          apenas um movimento.
+        </p>
+
+        <strong>
+          Como ganha
+        </strong>
+
+        <p>
+          Vence a equipe que conseguir terminar
+          todos os copos primeiro.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="num">
+        05 / 05
+      </div>
+
+      <h3>
+        Efeito Manada
+      </h3>
+
+      <p>
+        O time com maior sintonia ganha.
+      </p>
+
+      <button class="rules-button" onclick="toggleRules(this)">
+        VER REGRAS →
+      </button>
+
+      <div class="rules">
+
+        <strong>
+          Como funciona
+        </strong>
+
+        <p>
+          Todo mundo participa. A cada rodada,
+          uma pergunta é apresentada e cada pessoa
+          responde sem saber o que os outros responderam.
+        </p>
+
+        <strong>
+          Como ganha
+        </strong>
+
+        <p>
+          A equipe que tiver mais respostas iguais
+          é a mais sincronizada e ganha a rodada.
+        </p>
+
+        <strong>
+          Quem perde?
+        </strong>
+
+        <p>
+          A equipe menos sincronizada perde a rodada.
+        </p>
+
+      </div>
+
+    </div>
+
+
   </div>
 
-  <div class="card">
-    <div class="num">02 / 05</div>
-    <h3>Playlist da Flavinha</h3>
-    <p>Será que vocês conhecem os gostos musicais da aniversariante?</p>
-
-    <button class="rules-button" onclick="toggleRules(this)">
-      VER REGRAS →
-    </button>
-
-    <div class="rules">
-      <strong>Como funciona</strong>
-      <p>Cada equipe escolhe um integrante para tentar acertar a música. Serão 16 rodadas, com gêneros musicais pré-definidos.</p>
-
-      <strong>Vale</strong>
-      <p>Cantar a letra ou acertar o nome da música.</p>
-
-      <strong>Empate</strong>
-      <p>Rodada extra — vale tudo.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="num">03 / 05</div>
-    <h3>Nem a Pato</h3>
-    <p>Um palpite acima ou duvide do outro time.</p>
-
-    <button class="rules-button" onclick="toggleRules(this)">
-      VER REGRAS →
-    </button>
-
-    <div class="rules">
-      <strong>Como funciona</strong>
-      <p>Todo mundo participa. A cada rodada, uma pergunta é feita e as equipes dão seus palpites em ordem.</p>
-
-      <strong>Nem a Pato!</strong>
-      <p>A qualquer momento, uma equipe pode duvidar da resposta anterior dizendo "NEM A PATO!".</p>
-
-      <strong>Como ganha</strong>
-      <p>Quem errar é eliminado daquela rodada. A equipe que sobreviver até o final vence a rodada.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="num">04 / 05</div>
-    <h3>Flip Cup</h3>
-    <p>Velocidade, bebida e coordenação.</p>
-
-    <button class="rules-button" onclick="toggleRules(this)">
-      VER REGRAS →
-    </button>
-
-    <div class="rules">
-      <strong>Como funciona</strong>
-      <p>Cada integrante precisa beber o conteúdo do copo e, em seguida, virar o copo usando apenas um movimento.</p>
-
-      <strong>Como ganha</strong>
-      <p>Vence a equipe que conseguir terminar todos os copos primeiro.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="num">05 / 05</div>
-    <h3>Efeito Manada</h3>
-    <p>O time com maior sintonia ganha.</p>
-
-    <button class="rules-button" onclick="toggleRules(this)">
-      VER REGRAS →
-    </button>
-
-    <div class="rules">
-      <strong>Como funciona</strong>
-      <p>Todo mundo participa. A cada rodada, uma pergunta é apresentada e cada pessoa responde sem saber o que os outros responderam.</p>
-
-      <strong>Como ganha</strong>
-      <p>A equipe que tiver mais respostas iguais é a mais sincronizada e ganha a rodada.</p>
-
-      <strong>Quem perde?</strong>
-      <p>A equipe menos sincronizada perde a rodada.</p>
-    </div>
-  </div>
-
-</div>
 </section>
+
 
 <section id="pontos">
 
   <div class="title">
-    <small>SISTEMA DE PONTOS</small>
-    <h2>Como funciona?</h2>
+
+    <small>
+      SISTEMA DE PONTOS
+    </small>
+
+    <h2>
+      Como funciona?
+    </h2>
+
   </div>
 
+
   <div class="points-intro">
+
     <p>
       Cada equipe acumula pontos ao longo da noite.
-      A pontuação final é formada pelos resultados dos jogos
-      e pelos bônus.
+      A pontuação final é formada pelos resultados
+      dos jogos e pelos bônus.
     </p>
+
   </div>
+
 
   <div class="points-grid">
 
-<div class="points-card">
-  <div class="card-front">
-    <div class="points-number">01</div>
-    <h3>Beerpong</h3>
 
-    <div class="points-ranking">
-      <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
-      <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
-      <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
-      <div><span>4º lugar</span><strong>5 pts</strong></div>
+    <!-- ===================================
+         BEERPONG
+    ==================================== -->
+
+    <div class="points-card">
+
+      <div class="card-front">
+
+        <div class="points-number">
+          01
+        </div>
+
+        <h3>
+          Beerpong
+        </h3>
+
+        <div class="points-ranking">
+
+          <div>
+            <span>🥇 1º lugar</span>
+            <strong>20 pts</strong>
+          </div>
+
+          <div>
+            <span>🥈 2º lugar</span>
+            <strong>15 pts</strong>
+          </div>
+
+          <div>
+            <span>🥉 3º lugar</span>
+            <strong>10 pts</strong>
+          </div>
+
+          <div>
+            <span>4º lugar</span>
+            <strong>5 pts</strong>
+          </div>
+
+        </div>
+
+        <button
+          class="flip-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          INSERIR RESULTADO ↗
+        </button>
+
+      </div>
+
+
+      <div class="card-back">
+
+        <div class="points-number">
+          01 · RESULTADO
+        </div>
+
+        <h3>
+          Beerpong
+        </h3>
+
+        <label>🥇 1º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="20"
+          data-position="1"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥈 2º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="15"
+          data-position="2"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥉 3º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="10"
+          data-position="3"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>
+          4º lugar
+        </label>
+
+        <select
+          class="position-team"
+          data-points="5"
+          data-position="4"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <button
+          class="save-points"
+          onclick="saveGamePoints(event, this)"
+        >
+          SALVAR RESULTADO
+        </button>
+
+        <button
+          class="back-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          ← VOLTAR
+        </button>
+
+      </div>
+
     </div>
 
-<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
-  INSERIR RESULTADO ↗
-</button>
-  </div>
-  
-<div class="card-back">
-    <div class="points-number">01 · RESULTADO</div>
-    <h3>Beerpong</h3>
 
-    <label>🥇 1º lugar</label>
-    <select class="position-team" data-points="20" data-position="1">
-      <option value="">Selecione o time</option>
-    </select>
+    <!-- ===================================
+         PLAYLIST
+    ==================================== -->
 
-    <label>🥈 2º lugar</label>
-    <select class="position-team" data-points="15" data-position="2">
-      <option value="">Selecione o time</option>
-    </select>
+    <div class="points-card">
 
-    <label>🥉 3º lugar</label>
-    <select class="position-team" data-points="10" data-position="3">
-      <option value="">Selecione o time</option>
-    </select>
+      <div class="card-front">
 
-    <label>4º lugar</label>
-    <select class="position-team" data-points="5" data-position="4">
-      <option value="">Selecione o time</option>
-    </select>
+        <div class="points-number">
+          02
+        </div>
 
-    <button class="save-points" onclick="saveGamePoints(event, this)">
-      SALVAR RESULTADO
-    </button>
+        <h3>
+          Playlist da Flavinha
+        </h3>
 
-    <button class="back-button" onclick="flipCard(this.closest('.points-card'))">
-      ← VOLTAR
-    </button>
-  </div>
-  </div>
+        <div class="points-ranking">
+
+          <div>
+            <span>🥇 1º lugar</span>
+            <strong>20 pts</strong>
+          </div>
+
+          <div>
+            <span>🥈 2º lugar</span>
+            <strong>15 pts</strong>
+          </div>
+
+          <div>
+            <span>🥉 3º lugar</span>
+            <strong>10 pts</strong>
+          </div>
+
+          <div>
+            <span>4º lugar</span>
+            <strong>5 pts</strong>
+          </div>
+
+        </div>
+
+        <button
+          class="flip-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          INSERIR RESULTADO ↗
+        </button>
+
+      </div>
 
 
-<div class="points-card">
-  <div class="card-front">
-    <div class="points-number">02</div>
-    <h3>Playlist da Flavinha</h3>
+      <div class="card-back">
 
-    <div class="points-ranking">
-      <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
-      <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
-      <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
-      <div><span>4º lugar</span><strong>5 pts</strong></div>
+        <div class="points-number">
+          02 · RESULTADO
+        </div>
+
+        <h3>
+          Playlist da Flavinha
+        </h3>
+
+        <label>🥇 1º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="20"
+          data-position="1"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥈 2º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="15"
+          data-position="2"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥉 3º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="10"
+          data-position="3"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>
+          4º lugar
+        </label>
+
+        <select
+          class="position-team"
+          data-points="5"
+          data-position="4"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <button
+          class="save-points"
+          onclick="saveGamePoints(event, this)"
+        >
+          SALVAR RESULTADO
+        </button>
+
+        <button
+          class="back-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          ← VOLTAR
+        </button>
+
+      </div>
+
     </div>
 
-<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
-  INSERIR RESULTADO ↗
-</button>
-  </div>
-  
-  <div class="card-back">
-    <div class="points-number">02 · RESULTADO</div>
-    <h3>Playlist da Flavinha</h3>
 
-    <label>🥇 1º lugar</label>
-    <select class="position-team" data-points="20" data-position="1">
-      <option value="">Selecione o time</option>
-    </select>
+    <!-- ===================================
+         NEM A PATO
+    ==================================== -->
 
-    <label>🥈 2º lugar</label>
-    <select class="position-team" data-points="15" data-position="2">
-      <option value="">Selecione o time</option>
-    </select>
+    <div class="points-card">
 
-    <label>🥉 3º lugar</label>
-    <select class="position-team" data-points="10" data-position="3">
-      <option value="">Selecione o time</option>
-    </select>
+      <div class="card-front">
 
-    <label>4º lugar</label>
-    <select class="position-team" data-points="5" data-position="4">
-      <option value="">Selecione o time</option>
-    </select>
+        <div class="points-number">
+          03
+        </div>
 
-    <button class="save-points" onclick="saveGamePoints(event, this)">
-      SALVAR RESULTADO
-    </button>
+        <h3>
+          Nem a Pato
+        </h3>
 
-    <button class="back-button" onclick="flipCard(this.closest('.points-card'))">
-      ← VOLTAR
-    </button>
-</div>
-</div>
+        <div class="points-ranking">
 
-<div class="points-card">
-  <div class="card-front">
-    <div class="points-number">03</div>
-    <h3>Nem a Pato</h3>
+          <div>
+            <span>🥇 1º lugar</span>
+            <strong>20 pts</strong>
+          </div>
 
-    <div class="points-ranking">
-      <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
-      <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
-      <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
-      <div><span>4º lugar</span><strong>5 pts</strong></div>
+          <div>
+            <span>🥈 2º lugar</span>
+            <strong>15 pts</strong>
+          </div>
+
+          <div>
+            <span>🥉 3º lugar</span>
+            <strong>10 pts</strong>
+          </div>
+
+          <div>
+            <span>4º lugar</span>
+            <strong>5 pts</strong>
+          </div>
+
+        </div>
+
+        <button
+          class="flip-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          INSERIR RESULTADO ↗
+        </button>
+
+      </div>
+
+
+      <div class="card-back">
+
+        <div class="points-number">
+          03 · RESULTADO
+        </div>
+
+        <h3>
+          Nem a Pato
+        </h3>
+
+        <label>🥇 1º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="20"
+          data-position="1"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥈 2º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="15"
+          data-position="2"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥉 3º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="10"
+          data-position="3"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>
+          4º lugar
+        </label>
+
+        <select
+          class="position-team"
+          data-points="5"
+          data-position="4"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <button
+          class="save-points"
+          onclick="saveGamePoints(event, this)"
+        >
+          SALVAR RESULTADO
+        </button>
+
+        <button
+          class="back-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          ← VOLTAR
+        </button>
+
+      </div>
+
     </div>
 
-<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
-  INSERIR RESULTADO ↗
-</button>
-  </div>
 
-  <div class="card-back">
-    <div class="points-number">03 · RESULTADO</div>
-    <h3>Nem a Pato</h3>
+    <!-- ===================================
+         FLIP CUP
+    ==================================== -->
 
-    <label>🥇 1º lugar</label>
-    <select class="position-team" data-points="20" data-position="1">
-      <option value="">Selecione o time</option>
-    </select>
+    <div class="points-card">
 
-    <label>🥈 2º lugar</label>
-    <select class="position-team" data-points="15" data-position="2">
-      <option value="">Selecione o time</option>
-    </select>
+      <div class="card-front">
 
-    <label>🥉 3º lugar</label>
-    <select class="position-team" data-points="10" data-position="3">
-      <option value="">Selecione o time</option>
-    </select>
+        <div class="points-number">
+          04
+        </div>
 
-    <label>4º lugar</label>
-    <select class="position-team" data-points="5" data-position="4">
-      <option value="">Selecione o time</option>
-    </select>
+        <h3>
+          Flip Cup
+        </h3>
 
-    <button class="save-points" onclick="saveGamePoints(event, this)">
-      SALVAR RESULTADO
-    </button>
+        <div class="points-ranking">
 
-    <button class="back-button" onclick="flipCard(this.closest('.points-card'))">
-      ← VOLTAR
-    </button>
-</div>
-</div>
+          <div>
+            <span>🥇 1º lugar</span>
+            <strong>20 pts</strong>
+          </div>
+
+          <div>
+            <span>🥈 2º lugar</span>
+            <strong>15 pts</strong>
+          </div>
+
+          <div>
+            <span>🥉 3º lugar</span>
+            <strong>10 pts</strong>
+          </div>
+
+          <div>
+            <span>4º lugar</span>
+            <strong>5 pts</strong>
+          </div>
+
+        </div>
+
+        <button
+          class="flip-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          INSERIR RESULTADO ↗
+        </button>
+
+      </div>
 
 
-<div class="points-card">
-  <div class="card-front">
-    <div class="points-number">04</div>
-    <h3>Flip Cup</h3>
+      <div class="card-back">
 
-    <div class="points-ranking">
-      <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
-      <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
-      <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
-      <div><span>4º lugar</span><strong>5 pts</strong></div>
+        <div class="points-number">
+          04 · RESULTADO
+        </div>
+
+        <h3>
+          Flip Cup
+        </h3>
+
+        <label>🥇 1º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="20"
+          data-position="1"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥈 2º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="15"
+          data-position="2"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥉 3º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="10"
+          data-position="3"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>
+          4º lugar
+        </label>
+
+        <select
+          class="position-team"
+          data-points="5"
+          data-position="4"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <button
+          class="save-points"
+          onclick="saveGamePoints(event, this)"
+        >
+          SALVAR RESULTADO
+        </button>
+
+        <button
+          class="back-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          ← VOLTAR
+        </button>
+
+      </div>
+
     </div>
 
-<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
-  INSERIR RESULTADO ↗
-</button>
-  </div>
 
-  <div class="card-back">
-    <div class="points-number">04 · RESULTADO</div>
-    <h3>Flip Cup</h3>
+    <!-- ===================================
+         EFEITO MANADA
+    ==================================== -->
 
-    <label>🥇 1º lugar</label>
-    <select class="position-team" data-points="20" data-position="1">
-      <option value="">Selecione o time</option>
-    </select>
+    <div class="points-card">
 
-    <label>🥈 2º lugar</label>
-    <select class="position-team" data-points="15" data-position="2">
-      <option value="">Selecione o time</option>
-    </select>
+      <div class="card-front">
 
-    <label>🥉 3º lugar</label>
-    <select class="position-team" data-points="10" data-position="3">
-      <option value="">Selecione o time</option>
-    </select>
+        <div class="points-number">
+          05
+        </div>
 
-    <label>4º lugar</label>
-    <select class="position-team" data-points="5" data-position="4">
-      <option value="">Selecione o time</option>
-    </select>
+        <h3>
+          Efeito Manada
+        </h3>
 
-    <button class="save-points" onclick="saveGamePoints(event, this)">
-      SALVAR RESULTADO
-    </button>
+        <div class="points-ranking">
 
-    <button class="back-button" onclick="flipCard(this.closest('.points-card'))">
-      ← VOLTAR
-    </button>
-  </div>
-</div>
+          <div>
+            <span>🥇 1º lugar</span>
+            <strong>20 pts</strong>
+          </div>
 
-<div class="points-card">
-  <div class="card-front">
-    <div class="points-number">05</div>
-    <h3>Efeito Manada</h3>
+          <div>
+            <span>🥈 2º lugar</span>
+            <strong>15 pts</strong>
+          </div>
 
-    <div class="points-ranking">
-      <div><span>🥇 1º lugar</span><strong>20 pts</strong></div>
-      <div><span>🥈 2º lugar</span><strong>15 pts</strong></div>
-      <div><span>🥉 3º lugar</span><strong>10 pts</strong></div>
-      <div><span>4º lugar</span><strong>5 pts</strong></div>
+          <div>
+            <span>🥉 3º lugar</span>
+            <strong>10 pts</strong>
+          </div>
+
+          <div>
+            <span>4º lugar</span>
+            <strong>5 pts</strong>
+          </div>
+
+        </div>
+
+        <button
+          class="flip-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          INSERIR RESULTADO ↗
+        </button>
+
+      </div>
+
+
+      <div class="card-back">
+
+        <div class="points-number">
+          05 · RESULTADO
+        </div>
+
+        <h3>
+          Efeito Manada
+        </h3>
+
+        <label>🥇 1º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="20"
+          data-position="1"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥈 2º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="15"
+          data-position="2"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>🥉 3º lugar</label>
+
+        <select
+          class="position-team"
+          data-points="10"
+          data-position="3"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <label>
+          4º lugar
+        </label>
+
+        <select
+          class="position-team"
+          data-points="5"
+          data-position="4"
+        >
+          <option value="">
+            Selecione o time
+          </option>
+        </select>
+
+
+        <button
+          class="save-points"
+          onclick="saveGamePoints(event, this)"
+        >
+          SALVAR RESULTADO
+        </button>
+
+        <button
+          class="back-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          ← VOLTAR
+        </button>
+
+      </div>
+
     </div>
 
-<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
-  INSERIR RESULTADO ↗
-</button>
+
+    <!-- ===================================
+         BÔNUS
+    ==================================== -->
+
+    <div class="points-card bonus">
+
+      <div class="card-front">
+
+        <div class="points-number">
+          ✦
+        </div>
+
+        <h3>
+          Pontos de bônus
+        </h3>
+
+        <p>
+          Algumas surpresas que garantem
+          <strong>+ pontos</strong>
+          para sua equipe.
+        </p>
+
+        <div class="bonus-highlight">
+          Pontos
+          <span>
+            Surpresa
+          </span>
+        </div>
+
+        <button
+          class="flip-button"
+          onclick="flipCard(this.closest('.points-card'))"
+        >
+          INSERIR PONTOS ↗
+        </button>
+
+      </div>
+
+
+      <div class="card-back">
+
+        <div class="points-number">
+          ✦ · BÔNUS
+        </div>
+
+        <h3>
+          Pontos
+        </h3>
+
+        <p class="bonus-instruction">
+          Coloque quantos pontos de surpresa
+          sua equipe ganhou.
+        </p>
+
+
+        <div class="gift-team">
+
+          <label>
+            TIME 1
+          </label>
+
+          <select class="gift-team-select">
+          </select>
+
+          <input
+            type="number"
+            class="gift-quantity"
+            min="0"
+            value="0"
+            placeholder="0"
+          >
+
+        </div>
+
+
+        <div class="gift-team">
+
+          <label>
+            TIME 2
+          </label>
+
+          <select class="gift-team-select">
+          </select>
+
+          <input
+            type="number"
+            class="gift-quantity"
+            min="0"
+            value="0"
+            placeholder="0"
+          >
+
+        </div>
+
+
+        <div class="gift-team">
+
+          <label>
+            TIME 3
+          </label>
+
+          <select class="gift-team-select">
+          </select>
+
+          <input
+            type="number"
+            class="gift-quantity"
+            min="0"
+            value="0"
+            placeholder="0"
+          >
+
+        </div>
+
+
+        <div class="gift-team">
+
+          <label>
+            TIME 4
+          </label>
+
+          <select class="gift-team-select">
+          </select>
+
+          <input
+            type="number"
+            class="gift-quantity"
+            min="0"
+            value="0"
+            placeholder="0"
+          >
+
+        </div>
+
+
+        <button
+          class="save-points"
+          onclick="saveGiftPoints(event, this)"
+        >
+          SALVAR BÔNUS
+        </button>
+
+        <button
+          class="back-button"
+          onclick="flipCard(this.parentElement.parentElement)"
+        >
+          ← VOLTAR
+        </button>
+
+      </div>
+
+    </div>
+
+
   </div>
-  
-  <div class="card-back">
-    <div class="points-number">05 · RESULTADO</div>
-    <h3>Efeito Manada</h3>
-
-    <label>🥇 1º lugar</label>
-    <select class="position-team" data-points="20" data-position="1">
-      <option value="">Selecione o time</option>
-    </select>
-
-    <label>🥈 2º lugar</label>
-    <select class="position-team" data-points="15" data-position="2">
-      <option value="">Selecione o time</option>
-    </select>
-
-    <label>🥉 3º lugar</label>
-    <select class="position-team" data-points="10" data-position="3">
-      <option value="">Selecione o time</option>
-    </select>
-
-    <label>4º lugar</label>
-    <select class="position-team" data-points="5" data-position="4">
-      <option value="">Selecione o time</option>
-    </select>
-
-    <button class="save-points" onclick="saveGamePoints(event, this)">
-      SALVAR RESULTADO
-    </button>
-
-    <button class="back-button" onclick="flipCard(this.closest('.points-card'))">
-      ← VOLTAR
-    </button>
-  </div>
-</div>
-
-
-<div class="points-card bonus">
-
-  <div class="card-front">
-
-    <div class="points-number">✦</div>
-
-    <h3>Pontos de bônus</h3>
-
-    <p>
-      Algumas surpresas que garantem
-      <strong>+ pontos</strong> para sua equipe.
-    </p>
-
-    <div class="bonus-highlight">
-      Pontos
-      <span>Surpresa</span>
-    </div>
-
-<button class="flip-button" onclick="flipCard(this.closest('.points-card'))">
-  INSERIR PONTOS ↗
-</button>
-
-  </div>
-
-
-  <div class="card-back">
-
-    <div class="points-number">✦ · BÔNUS</div>
-
-    <h3>Pontos</h3>
-
-    <p class="bonus-instruction">
-      Coloque quantos pontos de surpresa sua equipe ganhou.
-    </p>
-
-    <div class="gift-team">
-      <label>TIME 1</label>
-      <select class="gift-team-select"></select>
-
-      <input
-        type="number"
-        class="gift-quantity"
-        min="0"
-        value="0"
-        placeholder="0"
-      >
-    </div>
-
-    <div class="gift-team">
-      <label>TIME 2</label>
-      <select class="gift-team-select"></select>
-
-      <input
-        type="number"
-        class="gift-quantity"
-        min="0"
-        value="0"
-        placeholder="0"
-      >
-    </div>
-
-    <div class="gift-team">
-      <label>TIME 3</label>
-      <select class="gift-team-select"></select>
-
-      <input
-        type="number"
-        class="gift-quantity"
-        min="0"
-        value="0"
-        placeholder="0"
-      >
-    </div>
-
-    <div class="gift-team">
-      <label>TIME 4</label>
-      <select class="gift-team-select"></select>
-
-      <input
-        type="number"
-        class="gift-quantity"
-        min="0"
-        value="0"
-        placeholder="0"
-      >
-    </div>
-
-    <button class="save-points" onclick="saveGiftPoints(event, this)">
-      SALVAR BÔNUS
-    </button>
-
-    <button
-      class="back-button"
-      onclick="flipCard(this.parentElement.parentElement)"
-    >
-      ← VOLTAR
-    </button>
-
-  </div>
-
-</div>
 
 </section>
-  
+
 
 <section id="premios">
 
   <div class="title">
-    <small>OS PRÊMIOS</small>
-    <h2>Para equipe vencedora</h2>
+
+    <small>
+      OS PRÊMIOS
+    </small>
+
+    <h2>
+      Para equipe vencedora
+    </h2>
+
   </div>
+
 
   <div class="prizes">
 
+
     <div class="prize">
-      <div class="symbol">✦</div>
 
-      <h3>Prêmio Principal</h3>
-      <p>O grande prêmio da noite.</p>
+      <div class="symbol">
+        ✦
+      </div>
 
-      <button class="prize-button" onclick="togglePrize(this)">
+      <h3>
+        Prêmio Principal
+      </h3>
+
+      <p>
+        O grande prêmio da noite.
+      </p>
+
+      <button
+        class="prize-button"
+        onclick="togglePrize(this)"
+      >
         VER PRÊMIO →
       </button>
 
       <div class="prize-list">
+
         <ul>
-          <li>Vale-presente Centauro</li>
+
+          <li>
+            Vale-presente Centauro
+          </li>
+
         </ul>
+
       </div>
+
     </div>
 
 
     <div class="prize">
-      <div class="symbol">◈</div>
 
-      <h3>Prêmios Surpresa</h3>
-      <p>Prêmios especiais para os vencedores.</p>
+      <div class="symbol">
+        ◈
+      </div>
 
-      <button class="prize-button" onclick="togglePrize(this)">
+      <h3>
+        Prêmios Surpresa
+      </h3>
+
+      <p>
+        Prêmios especiais para os vencedores.
+      </p>
+
+      <button
+        class="prize-button"
+        onclick="togglePrize(this)"
+      >
         VER PRÊMIOS →
       </button>
 
       <div class="prize-list">
+
         <ul>
-          <li>Kit Sex Shop</li>
-          <li>Kit Oceane</li>
-          <li>Caneca Edward</li>
-          <li>Espumante</li>
+
+          <li>
+            Kit Sex Shop
+          </li>
+
+          <li>
+            Kit Oceane
+          </li>
+
+          <li>
+            Caneca Edward
+          </li>
+
+          <li>
+            Espumante
+          </li>
+
         </ul>
+
       </div>
+
     </div>
 
 
     <div class="prize">
-      <div class="symbol">◇</div>
 
-      <h3>Prêmios Comuns</h3>
-      <p>Uma prenda para cada integrante do time vencedor.</p>
+      <div class="symbol">
+        ◇
+      </div>
 
-      <button class="prize-button" onclick="togglePrize(this)">
+      <h3>
+        Prêmios Comuns
+      </h3>
+
+      <p>
+        Uma prenda para cada integrante
+        do time vencedor.
+      </p>
+
+      <button
+        class="prize-button"
+        onclick="togglePrize(this)"
+      >
         VER PRÊMIOS →
       </button>
 
       <div class="prize-list">
+
         <ul>
-          <li>Kit de esmalte</li>
-          <li>Nécessaire</li>
-          <li>Baralho</li>
-          <li>Isqueiro</li>
-          <li>Palavra cruzada</li>
-          <li>Livro de romance</li>
-          <li>Livro de investigação</li>
-          <li>Kit de papelaria</li>
-          <li>Touca com enrolador de cachos</li>
+
+          <li>
+            Kit de esmalte
+          </li>
+
+          <li>
+            Nécessaire
+          </li>
+
+          <li>
+            Baralho
+          </li>
+
+          <li>
+            Isqueiro
+          </li>
+
+          <li>
+            Palavra cruzada
+          </li>
+
+          <li>
+            Livro de romance
+          </li>
+
+          <li>
+            Livro de investigação
+          </li>
+
+          <li>
+            Kit de papelaria
+          </li>
+
+          <li>
+            Touca com enrolador de cachos
+          </li>
+
         </ul>
+
       </div>
+
     </div>
+
 
   </div>
 
 </section>
 
-<footer>ANIVERSÁRIO DA FLAVIA · 2026</footer>
-<script>
-const SUPABASE_URL = "https://jjhnzkqrhzlcegvtqxbc.supabase.co";
-const SUPABASE_KEY = "sb_publishable_ae9fnMuMvKj9sH5HtjdtwA_aAJqlUq8";
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+<footer>
+  ANIVERSÁRIO DA FLAVIA · 2026
+</footer>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://jjhnzkqrhzlcegvtqxbc.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_ae9fnMuMvKj9sH5HtjdtwA_aAJqlUq8";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
 
 let teams = [];
 
+
 const games = [
+
   {
-    key: "beerpong",
-    name: "Beerpong"
+    key:"beerpong",
+    name:"Beerpong"
   },
+
   {
-    key: "playlist",
-    name: "Playlist da Flavinha"
+    key:"playlist",
+    name:"Playlist da Flavinha"
   },
+
   {
-    key: "nem_a_pato",
-    name: "Nem a Pato"
+    key:"nem_a_pato",
+    name:"Nem a Pato"
   },
+
   {
-    key: "flip_cup",
-    name: "Flip Cup"
+    key:"flip_cup",
+    name:"Flip Cup"
   },
+
   {
-    key: "efeito_manada",
-    name: "Efeito Manada"
+    key:"efeito_manada",
+    name:"Efeito Manada"
   }
+
 ];
 
 
@@ -1224,14 +2337,18 @@ const games = [
 // STATUS
 // ============================================
 
-function setStatus(message, type = "") {
+function setStatus(message,type=""){
 
-  const el = document.getElementById("status");
+  const el =
+    document.getElementById("status");
 
-  if (!el) return;
+  if(!el) return;
 
-  el.textContent = message;
-  el.className = "status " + type;
+  el.textContent =
+    message;
+
+  el.className =
+    "status " + type;
 }
 
 
@@ -1239,55 +2356,76 @@ function setStatus(message, type = "") {
 // PLACAR
 // ============================================
 
-function renderTeams() {
+function renderTeams(){
 
-  const board = document.getElementById("scoreboard");
+  const board =
+    document.getElementById("scoreboard");
 
-  teams.sort(
-    (a, b) =>
-      b.points - a.points ||
-      a.id - b.id
-  );
 
-  board.innerHTML = teams.map((team, index) => `
+  /*
+    IMPORTANTE:
 
-    <div class="team ${index === 0 ? 'first' : ''}">
+    Não ordenamos o array original "teams".
+    Criamos uma cópia apenas para exibir
+    o placar.
 
-      <div class="rank">
-        ${String(index + 1).padStart(2, '0')}
-      </div>
+    Isso evita que a ordem dos times usada
+    pelos selects seja alterada.
+  */
 
-      <div>
+  const sortedTeams =
+    [...teams].sort(
+      (a,b) =>
+        b.points - a.points ||
+        a.id - b.id
+    );
 
-        <div class="teamname">
-          ${team.name.toUpperCase()}
+
+  board.innerHTML =
+    sortedTeams.map((team,index)=>`
+
+      <div class="team ${index===0?'first':''}">
+
+        <div class="rank">
+          ${String(index+1).padStart(2,'0')}
         </div>
-
-        <div class="sub">
-          ${index === 0 ? 'LÍDER DO MOMENTO' : 'NA DISPUTA'}
-        </div>
-
-      </div>
-
-      <div class="score">
 
         <div>
 
-          <div class="points">
-            ${team.points}
+          <div class="teamname">
+            ${team.name.toUpperCase()}
           </div>
 
-          <div class="pts">
-            PONTOS
+          <div class="sub">
+            ${
+              index===0
+                ? "LÍDER DO MOMENTO"
+                : "NA DISPUTA"
+            }
+          </div>
+
+        </div>
+
+        <div class="score">
+
+          <div>
+
+            <div class="points">
+              ${team.points}
+            </div>
+
+            <div class="pts">
+              PONTOS
+            </div>
+
           </div>
 
         </div>
 
       </div>
 
-    </div>
+    `).join("");
 
-  `).join('');
 }
 
 
@@ -1295,14 +2433,15 @@ function renderTeams() {
 // CARREGAR TIMES
 // ============================================
 
-async function loadTeams() {
+async function loadTeams(){
 
-  const { data, error } =
+  const {data,error} =
     await supabaseClient
       .from("teams")
       .select("id,name,points");
 
-  if (error) {
+
+  if(error){
 
     console.error(error);
 
@@ -1314,42 +2453,51 @@ async function loadTeams() {
     return;
   }
 
-  teams = data || [];
+
+  teams =
+    data || [];
+
 
   renderTeams();
+
 
   setStatus(
     "PLACAR ONLINE • ATUALIZAÇÃO EM TEMPO REAL",
     "ok"
   );
+
 }
 
 
 // ============================================
-// CARREGAR RESULTADOS DOS JOGOS
+// CARREGAR RESULTADOS
 // ============================================
 
-async function loadGameResults() {
+async function loadGameResults(){
 
-  const { data, error } =
+  const {data,error} =
     await supabaseClient
       .from("game_results")
       .select("*")
       .order("position");
 
-  if (error) {
+
+  if(error){
 
     console.error(error);
 
     return;
   }
 
-  games.forEach(game => {
+
+  games.forEach(game=>{
 
     const results =
       data.filter(
-        result => result.game === game.key
+        result =>
+          result.game === game.key
       );
+
 
     updateGameResultDisplay(
       game.key,
@@ -1357,6 +2505,7 @@ async function loadGameResults() {
     );
 
   });
+
 }
 
 
@@ -1364,37 +2513,66 @@ async function loadGameResults() {
 // MOSTRAR RESULTADO SALVO
 // ============================================
 
-function updateGameResultDisplay(gameKey, results) {
+function updateGameResultDisplay(
+  gameKey,
+  results
+){
 
   const card =
     document.querySelector(
       `.points-card[data-game="${gameKey}"]`
     );
 
-  if (!card) return;
+
+  if(!card) return;
+
+
+  const front =
+    card.querySelector(".card-front");
+
+
+  if(!front) return;
+
 
   let display =
-    card.querySelector(".saved-result");
+    front.querySelector(".saved-result");
 
-  if (!display) {
+
+  if(!display){
 
     display =
       document.createElement("div");
 
-    display.className = "saved-result";
-
-    const front =
-      card.querySelector(".card-front");
+    display.className =
+      "saved-result";
 
     front.appendChild(display);
+
   }
 
-  if (!results.length) {
+
+  /*
+    Se não existe resultado,
+    simplesmente escondemos a área.
+
+    Ela continua existindo, mas NÃO ocupa
+    espaço no layout.
+  */
+
+  if(!results || !results.length){
 
     display.innerHTML = "";
 
+    display.style.display =
+      "none";
+
     return;
   }
+
+
+  display.style.display =
+    "block";
+
 
   const positionNames = [
     "🥇",
@@ -1403,42 +2581,64 @@ function updateGameResultDisplay(gameKey, results) {
     "4º"
   ];
 
+
+  const sortedResults =
+    [...results].sort(
+      (a,b) =>
+        a.position - b.position
+    );
+
+
   display.innerHTML = `
+
     <div class="saved-title">
       RESULTADO SALVO
     </div>
 
-    ${results
-      .sort((a, b) => a.position - b.position)
-      .map(result => {
+    ${
+      sortedResults.map(result=>{
 
         const team =
           teams.find(
-            t => t.id === result.team_id
+            t =>
+              t.id === result.team_id
           );
 
+
         return `
+
           <div class="saved-line">
+
             <span>
-              ${positionNames[result.position - 1] || result.position}
+              ${
+                positionNames[result.position-1]
+                || result.position
+              }
+
               ${team ? team.name : "Time"}
             </span>
 
             <strong>
               ${result.points} pts
             </strong>
+
           </div>
+
         `;
 
-      }).join("")}
+      }).join("")
+    }
+
 
     <button
       class="edit-result-button"
-      onclick="editGameResult(event, '${gameKey}')"
+      onclick="editGameResult(event,'${gameKey}')"
     >
       EDITAR RESULTADO
     </button>
+
   `;
+
 }
 
 
@@ -1446,29 +2646,38 @@ function updateGameResultDisplay(gameKey, results) {
 // EDITAR RESULTADO
 // ============================================
 
-async function editGameResult(event, gameKey) {
+async function editGameResult(
+  event,
+  gameKey
+){
 
   event.stopPropagation();
+
 
   const card =
     document.querySelector(
       `.points-card[data-game="${gameKey}"]`
     );
 
-  if (!card) return;
+
+  if(!card) return;
+
 
   card.classList.add("flipped");
 
+
   await populateTeamSelects(card);
 
-  const { data, error } =
+
+  const {data,error} =
     await supabaseClient
       .from("game_results")
       .select("*")
-      .eq("game", gameKey)
+      .eq("game",gameKey)
       .order("position");
 
-  if (error) {
+
+  if(error){
 
     console.error(error);
 
@@ -1479,31 +2688,40 @@ async function editGameResult(event, gameKey) {
     return;
   }
 
-  const selects =
-    card.querySelectorAll(".position-team");
 
-  selects.forEach(select => {
+  const selects =
+    card.querySelectorAll(
+      ".position-team"
+    );
+
+
+  selects.forEach(select=>{
 
     const position =
       Number(select.dataset.position);
 
+
     const result =
       data.find(
-        item => item.position === position
+        item =>
+          item.position === position
       );
 
-    if (result) {
+
+    if(result){
 
       select.value =
         String(result.team_id);
 
-    } else {
+    }else{
 
-      select.value = "";
+      select.value =
+        "";
 
     }
 
   });
+
 }
 
 
@@ -1511,63 +2729,93 @@ async function editGameResult(event, gameKey) {
 // PREENCHER SELECTS
 // ============================================
 
-async function populateTeamSelects(card) {
+async function populateTeamSelects(card){
 
   const selects =
-    card.querySelectorAll(".position-team");
+    card.querySelectorAll(
+      ".position-team"
+    );
 
-  selects.forEach(select => {
+
+  selects.forEach(select=>{
 
     const currentValue =
       select.value;
 
+
     const points =
       Number(select.dataset.points);
+
 
     const position =
       Number(select.dataset.position);
 
+
     select.innerHTML = `
+
       <option value="">
         Selecione o time
       </option>
 
-      ${teams.map(team => `
-        <option value="${team.id}">
-          ${team.name.toUpperCase()}
-        </option>
-      `).join("")}
+      ${
+        teams.map(team=>`
+
+          <option value="${team.id}">
+            ${team.name.toUpperCase()}
+          </option>
+
+        `).join("")
+      }
+
     `;
 
-    select.dataset.points = points;
-    select.dataset.position = position;
 
-    select.value = currentValue;
+    select.dataset.points =
+      points;
+
+    select.dataset.position =
+      position;
+
+
+    select.value =
+      currentValue;
 
   });
 
 
   const giftSelects =
-    card.querySelectorAll(".gift-team-select");
+    card.querySelectorAll(
+      ".gift-team-select"
+    );
 
-  giftSelects.forEach(select => {
+
+  giftSelects.forEach(select=>{
 
     const currentValue =
       select.value;
 
+
     select.innerHTML = `
+
       <option value="">
         Time
       </option>
 
-      ${teams.map(team => `
-        <option value="${team.id}">
-          ${team.name.toUpperCase()}
-        </option>
-      `).join("")}
+      ${
+        teams.map(team=>`
+
+          <option value="${team.id}">
+            ${team.name.toUpperCase()}
+          </option>
+
+        `).join("")
+      }
+
     `;
 
-    select.value = currentValue;
+
+    select.value =
+      currentValue;
 
   });
 
@@ -1578,18 +2826,22 @@ async function populateTeamSelects(card) {
 // ABRIR / FECHAR CARD
 // ============================================
 
-function flipCard(card) {
+function flipCard(card){
 
-  if (
+  if(
     !card ||
     !card.classList.contains("points-card")
-  ) {
+  ){
     return;
   }
 
+
   card.classList.toggle("flipped");
 
-  if (card.classList.contains("flipped")) {
+
+  if(
+    card.classList.contains("flipped")
+  ){
 
     populateTeamSelects(card);
 
@@ -1599,60 +2851,95 @@ function flipCard(card) {
 
 
 // ============================================
-// SALVAR RESULTADO DE UM JOGO
+// SALVAR RESULTADO
 // ============================================
 
-async function saveGamePoints(event, button) {
+async function saveGamePoints(
+  event,
+  button
+){
 
   event.stopPropagation();
+
 
   const card =
     button.closest(".points-card");
 
+
   const gameKey =
     card.dataset.game;
 
+
   const selects =
-    card.querySelectorAll(".position-team");
+    card.querySelectorAll(
+      ".position-team"
+    );
 
-  const results = [];
 
-  const selectedTeams = new Set();
+  const results =
+    [];
 
-  selects.forEach(select => {
 
-    if (select.value) {
+  const selectedTeams =
+    new Set();
 
-      const teamId =
-        Number(select.value);
 
-      if (selectedTeams.has(teamId)) {
+  let duplicate =
+    false;
 
-        alert(
-          "Cada posição precisa ter um time diferente."
-        );
 
-        return;
-      }
+  selects.forEach(select=>{
 
-      selectedTeams.add(teamId);
+    if(!select.value) return;
 
-      results.push({
-        team_id: teamId,
-        position: Number(
+
+    const teamId =
+      Number(select.value);
+
+
+    if(selectedTeams.has(teamId)){
+
+      duplicate =
+        true;
+
+      return;
+    }
+
+
+    selectedTeams.add(teamId);
+
+
+    results.push({
+
+      team_id:
+        teamId,
+
+      position:
+        Number(
           select.dataset.position
         ),
-        points: Number(
+
+      points:
+        Number(
           select.dataset.points
         )
-      });
 
-    }
+    });
 
   });
 
 
-  if (results.length !== 4) {
+  if(duplicate){
+
+    alert(
+      "Cada posição precisa ter um time diferente."
+    );
+
+    return;
+  }
+
+
+  if(results.length !== 4){
 
     alert(
       "Selecione os 4 times antes de salvar."
@@ -1667,14 +2954,14 @@ async function saveGamePoints(event, button) {
   );
 
 
-  // Apaga o resultado anterior daquele jogo
-  const { error: deleteError } =
+  const {error:deleteError} =
     await supabaseClient
       .from("game_results")
       .delete()
-      .eq("game", gameKey);
+      .eq("game",gameKey);
 
-  if (deleteError) {
+
+  if(deleteError){
 
     console.error(deleteError);
 
@@ -1686,22 +2973,31 @@ async function saveGamePoints(event, button) {
   }
 
 
-  // Salva o novo resultado
   const rows =
-    results.map(result => ({
-      game: gameKey,
-      team_id: result.team_id,
-      position: result.position,
-      points: result.points
+    results.map(result=>({
+
+      game:
+        gameKey,
+
+      team_id:
+        result.team_id,
+
+      position:
+        result.position,
+
+      points:
+        result.points
+
     }));
 
 
-  const { error: insertError } =
+  const {error:insertError} =
     await supabaseClient
       .from("game_results")
       .insert(rows);
 
-  if (insertError) {
+
+  if(insertError){
 
     console.error(insertError);
 
@@ -1713,11 +3009,12 @@ async function saveGamePoints(event, button) {
   }
 
 
-  // Recalcula tudo
   await recalculateScores();
 
 
-  card.classList.remove("flipped");
+  card.classList.remove(
+    "flipped"
+  );
 
 
   await loadTeams();
@@ -1737,14 +3034,18 @@ async function saveGamePoints(event, button) {
 // RECALCULAR PLACAR
 // ============================================
 
-async function recalculateScores() {
+async function recalculateScores(){
 
-  const { data: gameResults, error: gameError } =
+  const {
+    data:gameResults,
+    error:gameError
+  } =
     await supabaseClient
       .from("game_results")
       .select("team_id,points");
 
-  if (gameError) {
+
+  if(gameError){
 
     console.error(gameError);
 
@@ -1752,12 +3053,16 @@ async function recalculateScores() {
   }
 
 
-  const { data: bonusResults, error: bonusError } =
+  const {
+    data:bonusResults,
+    error:bonusError
+  } =
     await supabaseClient
       .from("bonus_results")
       .select("team_id,points");
 
-  if (bonusError) {
+
+  if(bonusError){
 
     console.error(bonusError);
 
@@ -1768,16 +3073,19 @@ async function recalculateScores() {
   const totals = {};
 
 
-  teams.forEach(team => {
+  teams.forEach(team=>{
 
-    totals[team.id] = 0;
+    totals[team.id] =
+      0;
 
   });
 
 
-  (gameResults || []).forEach(result => {
+  (gameResults || []).forEach(result=>{
 
-    if (totals[result.team_id] !== undefined) {
+    if(
+      totals[result.team_id] !== undefined
+    ){
 
       totals[result.team_id] +=
         Number(result.points);
@@ -1787,9 +3095,11 @@ async function recalculateScores() {
   });
 
 
-  (bonusResults || []).forEach(result => {
+  (bonusResults || []).forEach(result=>{
 
-    if (totals[result.team_id] !== undefined) {
+    if(
+      totals[result.team_id] !== undefined
+    ){
 
       totals[result.team_id] +=
         Number(result.points);
@@ -1799,17 +3109,19 @@ async function recalculateScores() {
   });
 
 
-  for (const team of teams) {
+  for(const team of teams){
 
-    const { error } =
+    const {error} =
       await supabaseClient
         .from("teams")
         .update({
-          points: totals[team.id]
+          points:
+            totals[team.id]
         })
-        .eq("id", team.id);
+        .eq("id",team.id);
 
-    if (error) {
+
+    if(error){
 
       console.error(error);
 
@@ -1824,28 +3136,40 @@ async function recalculateScores() {
 // SALVAR BÔNUS
 // ============================================
 
-async function saveGiftPoints(event, button) {
+async function saveGiftPoints(
+  event,
+  button
+){
 
   event.stopPropagation();
+
 
   const card =
     button.closest(".points-card");
 
+
   const teamSelects =
-    card.querySelectorAll(".gift-team-select");
+    card.querySelectorAll(
+      ".gift-team-select"
+    );
+
 
   const quantities =
-    card.querySelectorAll(".gift-quantity");
+    card.querySelectorAll(
+      ".gift-quantity"
+    );
 
 
-  // Apaga todos os bônus anteriores
-  const { error: deleteError } =
+  const {
+    error:deleteError
+  } =
     await supabaseClient
       .from("bonus_results")
       .delete()
-      .neq("id", 0);
+      .neq("id",0);
 
-  if (deleteError) {
+
+  if(deleteError){
 
     console.error(deleteError);
 
@@ -1860,23 +3184,28 @@ async function saveGiftPoints(event, button) {
   const bonusRows = [];
 
 
-  for (
-    let i = 0;
-    i < teamSelects.length;
+  for(
+    let i=0;
+    i<teamSelects.length;
     i++
-  ) {
+  ){
 
     const teamId =
-      Number(teamSelects[i].value);
+      Number(
+        teamSelects[i].value
+      );
+
 
     const quantity =
-      Number(quantities[i].value) || 0;
+      Number(
+        quantities[i].value
+      ) || 0;
 
 
-    if (!teamId) continue;
+    if(!teamId) continue;
 
 
-    if (quantity < 0) {
+    if(quantity < 0){
 
       alert(
         "A quantidade de pontos não pode ser negativa."
@@ -1886,11 +3215,16 @@ async function saveGiftPoints(event, button) {
     }
 
 
-    if (quantity > 0) {
+    if(quantity > 0){
 
       bonusRows.push({
-        team_id: teamId,
-        points: quantity
+
+        team_id:
+          teamId,
+
+        points:
+          quantity
+
       });
 
     }
@@ -1898,14 +3232,15 @@ async function saveGiftPoints(event, button) {
   }
 
 
-  if (bonusRows.length > 0) {
+  if(bonusRows.length > 0){
 
-    const { error } =
+    const {error} =
       await supabaseClient
         .from("bonus_results")
         .insert(bonusRows);
 
-    if (error) {
+
+    if(error){
 
       console.error(error);
 
@@ -1921,14 +3256,20 @@ async function saveGiftPoints(event, button) {
 
   await recalculateScores();
 
-  card.classList.remove("flipped");
+
+  card.classList.remove(
+    "flipped"
+  );
+
 
   await loadTeams();
+
 
   setStatus(
     "BÔNUS SALVO • PLACAR ATUALIZADO",
     "ok"
   );
+
 
   alert(
     "Bônus salvo com sucesso!"
@@ -1941,7 +3282,7 @@ async function saveGiftPoints(event, button) {
 // ZERAR PLACAR
 // ============================================
 
-async function resetScores() {
+async function resetScores(){
 
   const confirmed =
     confirm(
@@ -1950,7 +3291,7 @@ async function resetScores() {
     );
 
 
-  if (!confirmed) return;
+  if(!confirmed) return;
 
 
   setStatus(
@@ -1958,15 +3299,16 @@ async function resetScores() {
   );
 
 
-  // Apaga resultados dos jogos
-  const { error: gameError } =
+  const {
+    error:gameError
+  } =
     await supabaseClient
       .from("game_results")
       .delete()
-      .neq("id", 0);
+      .neq("id",0);
 
 
-  if (gameError) {
+  if(gameError){
 
     console.error(gameError);
 
@@ -1978,15 +3320,16 @@ async function resetScores() {
   }
 
 
-  // Apaga bônus
-  const { error: bonusError } =
+  const {
+    error:bonusError
+  } =
     await supabaseClient
       .from("bonus_results")
       .delete()
-      .neq("id", 0);
+      .neq("id",0);
 
 
-  if (bonusError) {
+  if(bonusError){
 
     console.error(bonusError);
 
@@ -1998,15 +3341,18 @@ async function resetScores() {
   }
 
 
-  // Zera os times
-  const { error: teamError } =
+  const {
+    error:teamError
+  } =
     await supabaseClient
       .from("teams")
-      .update({ points: 0 })
-      .neq("id", 0);
+      .update({
+        points:0
+      })
+      .neq("id",0);
 
 
-  if (teamError) {
+  if(teamError){
 
     console.error(teamError);
 
@@ -2018,32 +3364,41 @@ async function resetScores() {
   }
 
 
-  // Limpa os campos
   document
-    .querySelectorAll(".position-team")
-    .forEach(select => {
+    .querySelectorAll(
+      ".position-team"
+    )
+    .forEach(select=>{
       select.value = "";
     });
 
 
   document
-    .querySelectorAll(".gift-team-select")
-    .forEach(select => {
+    .querySelectorAll(
+      ".gift-team-select"
+    )
+    .forEach(select=>{
       select.value = "";
     });
 
 
   document
-    .querySelectorAll(".gift-quantity")
-    .forEach(input => {
+    .querySelectorAll(
+      ".gift-quantity"
+    )
+    .forEach(input=>{
       input.value = 0;
     });
 
 
   document
-    .querySelectorAll(".points-card.flipped")
-    .forEach(card => {
-      card.classList.remove("flipped");
+    .querySelectorAll(
+      ".points-card.flipped"
+    )
+    .forEach(card=>{
+      card.classList.remove(
+        "flipped"
+      );
     });
 
 
@@ -2069,20 +3424,25 @@ async function resetScores() {
 // REGRAS
 // ============================================
 
-function toggleRules(button) {
+function toggleRules(button){
 
   const rules =
     button.nextElementSibling;
 
-  rules.classList.toggle("show");
+
+  rules.classList.toggle(
+    "show"
+  );
 
 
-  if (rules.classList.contains("show")) {
+  if(
+    rules.classList.contains("show")
+  ){
 
     button.textContent =
       "ESCONDER REGRAS ↑";
 
-  } else {
+  }else{
 
     button.textContent =
       "VER REGRAS →";
@@ -2096,20 +3456,25 @@ function toggleRules(button) {
 // PRÊMIOS
 // ============================================
 
-function togglePrize(button) {
+function togglePrize(button){
 
   const prizes =
     button.nextElementSibling;
 
-  prizes.classList.toggle("show");
+
+  prizes.classList.toggle(
+    "show"
+  );
 
 
-  if (prizes.classList.contains("show")) {
+  if(
+    prizes.classList.contains("show")
+  ){
 
     button.textContent =
       "ESCONDER PRÊMIOS ↑";
 
-  } else {
+  }else{
 
     button.textContent =
       "VER PRÊMIOS →";
@@ -2123,16 +3488,17 @@ function togglePrize(button) {
 // CONFIGURAR CARDS
 // ============================================
 
-function setupGameCards() {
+function setupGameCards(){
 
   const cards =
     document.querySelectorAll(
       ".points-card"
     );
 
-  cards.forEach((card, index) => {
 
-    if (index < games.length) {
+  cards.forEach((card,index)=>{
+
+    if(index < games.length){
 
       card.dataset.game =
         games[index].key;
@@ -2154,22 +3520,18 @@ supabaseClient
   .on(
     "postgres_changes",
     {
-      event: "*",
-      schema: "public",
-      table: "teams"
+      event:"*",
+      schema:"public",
+      table:"teams"
     },
-    () => {
-
+    ()=>{
       loadTeams();
-
     }
   )
 
-  .subscribe(status => {
+  .subscribe(status=>{
 
-    if (
-      status === "SUBSCRIBED"
-    ) {
+    if(status === "SUBSCRIBED"){
 
       console.log(
         "Placar em tempo real conectado."
@@ -2184,7 +3546,7 @@ supabaseClient
 // INICIAR
 // ============================================
 
-async function initialize() {
+async function initialize(){
 
   setupGameCards();
 
@@ -2198,5 +3560,7 @@ async function initialize() {
 initialize();
 
 </script>
+
 </body>
 </html>
+```
