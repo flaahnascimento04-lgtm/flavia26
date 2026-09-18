@@ -2076,7 +2076,8 @@ footer{
 
 
         <button
-          class="save-points"
+           type="button"
+           class="save-game"
           onclick="saveGiftPoints(event, this)"
         >
           SALVAR BÔNUS
@@ -2850,179 +2851,77 @@ function flipCard(card){
 // SALVAR RESULTADO
 // ============================================
 
-async function saveGamePoints(
-  event,
-  button
-){
+async function saveGiftPoints(event, button){
 
   event.stopPropagation();
 
+  const card = button.closest(".points-card");
 
-  const card =
-    button.closest(".points-card");
+  const teamSelects = card.querySelectorAll(".gift-team-select");
+  const quantities = card.querySelectorAll(".gift-quantity");
 
+  const bonusRows = [];
 
-  const gameKey =
-    card.dataset.game;
+  for(let i = 0; i < teamSelects.length; i++){
 
+    const teamId = Number(teamSelects[i].value);
+    const quantity = Number(quantities[i].value) || 0;
 
-  const selects =
-    card.querySelectorAll(
-      ".position-team"
-    );
+    if(!teamId) continue;
 
-
-  const results =
-    [];
-
-
-  const selectedTeams =
-    new Set();
-
-
-  let duplicate =
-    false;
-
-
-  selects.forEach(select=>{
-
-    if(!select.value) return;
-
-
-    const teamId =
-      Number(select.value);
-
-
-    if(selectedTeams.has(teamId)){
-
-      duplicate =
-        true;
-
-      return;
-    }
-
-
-    selectedTeams.add(teamId);
-
-
-    results.push({
-
-      team_id:
-        teamId,
-
-      position:
-        Number(
-          select.dataset.position
-        ),
-
-      points:
-        Number(
-          select.dataset.points
-        )
-
+    bonusRows.push({
+      team_id: teamId,
+      points: quantity
     });
-
-  });
-
-
-  if(duplicate){
-
-    alert(
-      "Cada posição precisa ter um time diferente."
-    );
-
-    return;
   }
 
+  /*
+    Só altera o banco depois que todos
+    os dados foram coletados.
+  */
 
-  if(results.length !== 4){
-
-    alert(
-      "Selecione os 4 times antes de salvar."
-    );
-
-    return;
-  }
-
-
-  setStatus(
-    "SALVANDO RESULTADO..."
-  );
-
-
-  const {error:deleteError} =
-    await supabaseClient
-      .from("game_results")
-      .delete()
-      .eq("game",gameKey);
-
+  const { error: deleteError } = await supabaseClient
+    .from("bonus_results")
+    .delete()
+    .neq("id", 0);
 
   if(deleteError){
 
     console.error(deleteError);
 
-    alert(
-      "Erro ao substituir o resultado anterior."
-    );
+    alert("Erro ao atualizar os bônus.");
 
     return;
   }
 
+  if(bonusRows.length > 0){
 
-  const rows =
-    results.map(result=>({
+    const { error } = await supabaseClient
+      .from("bonus_results")
+      .insert(bonusRows);
 
-      game:
-        gameKey,
+    if(error){
 
-      team_id:
-        result.team_id,
+      console.error(error);
 
-      position:
-        result.position,
+      alert("Erro ao salvar os bônus.");
 
-      points:
-        result.points
-
-    }));
-
-
-  const {error:insertError} =
-    await supabaseClient
-      .from("game_results")
-      .insert(rows);
-
-
-  if(insertError){
-
-    console.error(insertError);
-
-    alert(
-      "Erro ao salvar o resultado."
-    );
-
-    return;
+      return;
+    }
   }
-
 
   await recalculateScores();
 
-
-  card.classList.remove(
-    "flipped"
-  );
-
+  card.classList.remove("flipped");
 
   await loadTeams();
 
-  await loadGameResults();
-
-
   setStatus(
-    "RESULTADO SALVO • PLACAR ATUALIZADO",
+    "BÔNUS SALVO • PLACAR ATUALIZADO",
     "ok"
   );
 
+  alert("Bônus salvo com sucesso!");
 }
 
 
