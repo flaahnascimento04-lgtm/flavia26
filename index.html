@@ -652,7 +652,278 @@ h1 span{
   border-color:#b484d1;
   background:rgba(180,132,209,.08);
 }
+/* =========================
+   RODA DA PLAYLIST
+========================= */
 
+.playlist-section{
+  position:relative;
+  padding:120px 20px 140px;
+  text-align:center;
+  overflow:hidden;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(103, 51, 125, .18) 0%,
+      rgba(8, 7, 11, 0) 55%
+    );
+}
+
+.playlist-section::before{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:rgba(126, 72, 157, .06);
+  filter:blur(80px);
+  top:100px;
+  left:50%;
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+
+.playlist-title{
+  position:relative;
+  margin:15px 0 10px;
+  font-family:"Playfair Display", serif;
+  font-size:clamp(42px, 7vw, 82px);
+  line-height:.9;
+  font-weight:400;
+  letter-spacing:-.04em;
+}
+
+.playlist-title span{
+  font-style:italic;
+}
+
+.playlist-subtitle{
+  position:relative;
+  margin:25px auto 55px;
+  color:#918a97;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.wheel-wrapper{
+  position:relative;
+  width:min(560px, 88vw);
+  aspect-ratio:1;
+  margin:0 auto;
+}
+
+#playlistWheel{
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  filter:
+    drop-shadow(0 0 30px rgba(116, 63, 145, .25))
+    drop-shadow(0 0 70px rgba(116, 63, 145, .08));
+}
+
+.wheel-pointer{
+  position:absolute;
+  z-index:10;
+  top:-11px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+
+  border-left:16px solid transparent;
+  border-right:16px solid transparent;
+  border-top:30px solid #e9d7f3;
+
+  filter:
+    drop-shadow(0 0 5px rgba(255,255,255,.35));
+}
+
+.wheel-wrapper::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  pointer-events:none;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.18),
+    inset 0 0 0 8px rgba(0,0,0,.2);
+}
+
+.spin-button{
+  position:absolute;
+  z-index:20;
+
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+
+  width:112px;
+  height:112px;
+
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.25);
+
+  background:#0b0910;
+  color:#fff;
+
+  font-family:inherit;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.2em;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 0 0 8px rgba(8,7,11,.35),
+    0 0 30px rgba(120,70,150,.3);
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+.spin-button:hover{
+  transform:translate(-50%, -50%) scale(1.05);
+  background:#15101b;
+  box-shadow:
+    0 0 0 8px rgba(8,7,11,.35),
+    0 0 40px rgba(150,90,180,.45);
+}
+
+.spin-button:disabled{
+  cursor:not-allowed;
+  opacity:.6;
+}
+
+.wheel-result{
+  position:relative;
+  width:min(600px, 90vw);
+  margin:55px auto 0;
+  padding:25px 20px 30px;
+
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.result-label{
+  margin-bottom:12px;
+
+  color:#918a97;
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+.result-text{
+  min-height:45px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#fff;
+
+  font-family:"Playfair Display", serif;
+  font-size:clamp(24px, 4vw, 38px);
+  font-style:italic;
+  line-height:1.1;
+}
+
+.wheel-counter{
+  margin-top:25px;
+
+  color:#77717d;
+
+  font-size:9px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+.reset-wheel-button{
+  margin-top:22px;
+
+  padding:9px 15px;
+
+  background:none;
+  border:1px solid rgba(180,132,209,.3);
+
+  color:#918a97;
+
+  font-family:inherit;
+  font-size:9px;
+  letter-spacing:.12em;
+
+  cursor:pointer;
+
+  transition:.25s;
+}
+
+.reset-wheel-button:hover{
+  border-color:rgba(180,132,209,.7);
+  color:#fff;
+}
+
+
+/* =========================
+   ANIMAÇÃO DO RESULTADO
+========================= */
+
+.wheel-result.result-show .result-text{
+  animation:resultAppear .5s ease;
+}
+
+@keyframes resultAppear{
+  0%{
+    opacity:0;
+    transform:translateY(10px) scale(.97);
+  }
+
+  100%{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+  .playlist-section{
+    padding:90px 15px 100px;
+  }
+
+  .playlist-subtitle{
+    margin-bottom:40px;
+  }
+
+  .wheel-wrapper{
+    width:min(90vw, 440px);
+  }
+
+  .spin-button{
+    width:88px;
+    height:88px;
+    font-size:9px;
+  }
+
+  .wheel-pointer{
+    border-left-width:12px;
+    border-right-width:12px;
+    border-top-width:24px;
+  }
+
+  .wheel-result{
+    margin-top:40px;
+  }
+
+}
 /* =========================================
    RESULTADO SALVO
    FICA FIXO E NÃO ALTERA O LAYOUT
@@ -2098,7 +2369,62 @@ footer{
   </div>
 
 </section>
+<!-- =========================
+     PLAYLIST DA FLAVINHA
+     RODA DE SORTEIO
+========================= -->
 
+<section id="playlist-roleta" class="playlist-section">
+
+  <div class="section-label">PLAYLIST DA FLAVINHA</div>
+
+  <h2 class="playlist-title">
+    RODA DA<br>
+    <span>FLAVINHA</span>
+  </h2>
+
+  <p class="playlist-subtitle">
+    Gire a roda e descubra o próximo desafio musical.
+  </p>
+
+  <div class="wheel-wrapper">
+
+    <div class="wheel-pointer"></div>
+
+    <canvas id="playlistWheel" width="560" height="560"></canvas>
+
+    <button
+      type="button"
+      id="spinWheel"
+      class="spin-button"
+      onclick="spinPlaylistWheel()"
+    >
+      GIRAR
+    </button>
+
+  </div>
+
+  <div class="wheel-result" id="wheelResult">
+    <div class="result-label">A CATEGORIA É...</div>
+    <div class="result-text" id="wheelResultText">
+      Gire a roda
+    </div>
+  </div>
+
+  <div class="wheel-counter" id="wheelCounter">
+    0 / 17 sorteadas
+  </div>
+
+  <button
+    type="button"
+    id="resetWheel"
+    class="reset-wheel-button"
+    onclick="resetPlaylistWheel()"
+  >
+    ↻ RECOMEÇAR
+  </button>
+
+</section>
 
 <section id="premios">
 
@@ -3306,7 +3632,406 @@ async function initialize(){
 
 
 initialize();
+/* =========================
+   RODA DA PLAYLIST
+========================= */
 
+const playlistCategories = [
+  "Pop de garotinha",
+  "MPB (Velho e novo)",
+  "Brasileirinhos",
+  "FUNK",
+  "Pendrive da Silvia",
+  "Se é criança gosta",
+  "Mais de um bilhão no Youtube",
+  "Anos 2000",
+  "Trilha sonora de filme",
+  "Aberturas de série ou desenhos",
+  "Músicas de Corno",
+  "Em qualquer Idioma",
+  "Rock Tio de 60 anos",
+  "Você é uma garota de 13 anos sofrendo",
+  "Para o público homem do show do Travis Scott",
+  "Primeiro set de leg press",
+  "Me fariam levantar de um coma"
+];
+
+const playlistWheel = document.getElementById("playlistWheel");
+const wheelCtx = playlistWheel.getContext("2d");
+
+const spinButton = document.getElementById("spinWheel");
+const resultText = document.getElementById("wheelResultText");
+const wheelResult = document.getElementById("wheelResult");
+const wheelCounter = document.getElementById("wheelCounter");
+
+let playlistRotation = 0;
+let playlistSpinning = false;
+
+let availablePlaylistCategories = [...playlistCategories];
+
+const wheelColors = [
+  "#24162d",
+  "#382044",
+  "#4b285b",
+  "#301d3a",
+  "#593366",
+  "#24182b",
+  "#42254d",
+  "#663d72",
+  "#2d2034",
+  "#50305b",
+  "#351f40",
+  "#70437a",
+  "#291a32",
+  "#48264f",
+  "#5c3466",
+  "#33203d",
+  "#7a4a82"
+];
+
+function drawPlaylistWheel(){
+
+  const canvas = playlistWheel;
+
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+
+  const radius = canvas.width / 2 - 8;
+
+  const total = playlistCategories.length;
+  const slice = (Math.PI * 2) / total;
+
+  wheelCtx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  playlistCategories.forEach((category, index) => {
+
+    const startAngle = index * slice - Math.PI / 2;
+    const endAngle = startAngle + slice;
+
+    /* Segmento */
+
+    wheelCtx.beginPath();
+
+    wheelCtx.moveTo(centerX, centerY);
+
+    wheelCtx.arc(
+      centerX,
+      centerY,
+      radius,
+      startAngle,
+      endAngle
+    );
+
+    wheelCtx.closePath();
+
+    wheelCtx.fillStyle =
+      wheelColors[index % wheelColors.length];
+
+    wheelCtx.fill();
+
+    wheelCtx.strokeStyle =
+      "rgba(255,255,255,.16)";
+
+    wheelCtx.lineWidth = 2;
+
+    wheelCtx.stroke();
+
+
+    /* Texto */
+
+    wheelCtx.save();
+
+    wheelCtx.translate(centerX, centerY);
+
+    const textAngle =
+      startAngle + slice / 2;
+
+    wheelCtx.rotate(textAngle);
+
+    wheelCtx.textAlign = "right";
+    wheelCtx.textBaseline = "middle";
+
+    wheelCtx.fillStyle =
+      "rgba(255,255,255,.9)";
+
+    wheelCtx.font =
+      '600 11px "DM Sans", sans-serif';
+
+    const maxWidth = radius - 70;
+
+    drawWrappedWheelText(
+      category,
+      radius - 25,
+      0,
+      maxWidth
+    );
+
+    wheelCtx.restore();
+
+  });
+
+  /* Centro */
+
+  wheelCtx.beginPath();
+
+  wheelCtx.arc(
+    centerX,
+    centerY,
+    58,
+    0,
+    Math.PI * 2
+  );
+
+  wheelCtx.fillStyle = "#0b0910";
+
+  wheelCtx.fill();
+
+  wheelCtx.strokeStyle =
+    "rgba(255,255,255,.18)";
+
+  wheelCtx.lineWidth = 2;
+
+  wheelCtx.stroke();
+}
+
+
+function drawWrappedWheelText(
+  text,
+  x,
+  y,
+  maxWidth
+){
+
+  const words = text.split(" ");
+
+  const lines = [];
+
+  let currentLine = "";
+
+  words.forEach(word => {
+
+    const testLine =
+      currentLine
+        ? currentLine + " " + word
+        : word;
+
+    if(
+      wheelCtx.measureText(testLine).width
+      > maxWidth &&
+      currentLine
+    ){
+
+      lines.push(currentLine);
+
+      currentLine = word;
+
+    }else{
+
+      currentLine = testLine;
+
+    }
+
+  });
+
+  if(currentLine){
+    lines.push(currentLine);
+  }
+
+  const lineHeight = 13;
+
+  const startY =
+    y - ((lines.length - 1) * lineHeight) / 2;
+
+  lines.forEach((line, index) => {
+
+    wheelCtx.fillText(
+      line,
+      x,
+      startY + index * lineHeight
+    );
+
+  });
+}
+
+
+function spinPlaylistWheel(){
+
+  if(playlistSpinning) return;
+
+  if(availablePlaylistCategories.length === 0){
+
+    resultText.textContent =
+      "Todas as 17 categorias já saíram!";
+
+    return;
+  }
+
+  playlistSpinning = true;
+
+  spinButton.disabled = true;
+
+  wheelResult.classList.remove("result-show");
+
+  /*
+   * Escolhe uma categoria entre as que
+   * ainda não foram sorteadas.
+   */
+
+  const chosenCategory =
+    availablePlaylistCategories[
+      Math.floor(
+        Math.random() *
+        availablePlaylistCategories.length
+      )
+    ];
+
+  const chosenIndex =
+    playlistCategories.indexOf(
+      chosenCategory
+    );
+
+  /*
+   * Cada fatia tem esse tamanho.
+   */
+
+  const slice =
+    360 / playlistCategories.length;
+
+  /*
+   * Queremos que a fatia escolhida pare
+   * exatamente no topo, onde está o ponteiro.
+   */
+
+  const targetAngle =
+    360 -
+    (
+      chosenIndex * slice +
+      slice / 2
+    );
+
+  /*
+   * Várias voltas para deixar a animação
+   * mais divertida.
+   */
+
+  const extraRotations =
+    5 + Math.floor(Math.random() * 3);
+
+  const currentNormalized =
+    ((playlistRotation % 360) + 360) % 360;
+
+  const targetNormalized =
+    ((targetAngle % 360) + 360) % 360;
+
+  let difference =
+    targetNormalized -
+    currentNormalized;
+
+  if(difference < 0){
+    difference += 360;
+  }
+
+  const finalRotation =
+    playlistRotation +
+    extraRotations * 360 +
+    difference;
+
+  playlistRotation = finalRotation;
+
+  playlistWheel.style.transition =
+    "transform 5s cubic-bezier(.12,.72,.08,1)";
+
+  playlistWheel.style.transform =
+    `rotate(${finalRotation}deg)`;
+
+
+  setTimeout(() => {
+
+    /*
+     * Remove a categoria da lista
+     * para ela não sair novamente.
+     */
+
+    availablePlaylistCategories =
+      availablePlaylistCategories.filter(
+        item => item !== chosenCategory
+      );
+
+    resultText.textContent =
+      chosenCategory;
+
+    wheelCounter.textContent =
+      `${playlistCategories.length - availablePlaylistCategories.length} / ${playlistCategories.length} sorteadas`;
+
+    wheelResult.classList.remove(
+      "result-show"
+    );
+
+    void wheelResult.offsetWidth;
+
+    wheelResult.classList.add(
+      "result-show"
+    );
+
+    playlistSpinning = false;
+
+    spinButton.disabled = false;
+
+    if(
+      availablePlaylistCategories.length === 0
+    ){
+
+      spinButton.textContent =
+        "COMPLETO";
+
+      spinButton.disabled = true;
+
+    }
+
+  }, 5100);
+}
+
+
+function resetPlaylistWheel(){
+
+  if(playlistSpinning) return;
+
+  availablePlaylistCategories =
+    [...playlistCategories];
+
+  playlistRotation = 0;
+
+  playlistWheel.style.transition =
+    "transform .5s ease";
+
+  playlistWheel.style.transform =
+    "rotate(0deg)";
+
+  resultText.textContent =
+    "Gire a roda";
+
+  wheelCounter.textContent =
+    "0 / 17 sorteadas";
+
+  spinButton.textContent =
+    "GIRAR";
+
+  spinButton.disabled = false;
+
+  wheelResult.classList.remove(
+    "result-show"
+  );
+}
+
+
+/* Desenha a roda quando a página carrega */
+
+drawPlaylistWheel();
 </script>
 
 </body>
