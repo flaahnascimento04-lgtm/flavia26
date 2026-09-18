@@ -553,8 +553,8 @@ h1 span{
   position:relative;
   perspective:1000px;
   cursor:default;
-  height:430px;
-  min-height:430px;
+  height:470px;
+  min-height:470px;
 }
 
 .card-front,
@@ -908,7 +908,7 @@ footer{
 
   .points-card{
     height:470px;
-    min-height:430px;
+    min-height:470px;
   }
 
 }
@@ -2077,7 +2077,7 @@ footer{
 
         <button
            type="button"
-           class="save-game"
+           class="save-points"
           onclick="saveGiftPoints(event, this)"
         >
           SALVAR BÔNUS
@@ -2346,6 +2346,7 @@ function setStatus(message,type=""){
 
   el.className =
     "status " + type;
+
 }
 
 
@@ -2358,23 +2359,14 @@ function renderTeams(){
   const board =
     document.getElementById("scoreboard");
 
+  if(!board) return;
 
-  /*
-    IMPORTANTE:
-
-    Não ordenamos o array original "teams".
-    Criamos uma cópia apenas para exibir
-    o placar.
-
-    Isso evita que a ordem dos times usada
-    pelos selects seja alterada.
-  */
 
   const sortedTeams =
     [...teams].sort(
       (a,b) =>
-        b.points - a.points ||
-        a.id - b.id
+        Number(b.points) - Number(a.points) ||
+        Number(a.id) - Number(b.id)
     );
 
 
@@ -2408,7 +2400,7 @@ function renderTeams(){
           <div>
 
             <div class="points">
-              ${team.points}
+              ${Number(team.points) || 0}
             </div>
 
             <div class="pts">
@@ -2435,12 +2427,13 @@ async function loadTeams(){
   const {data,error} =
     await supabaseClient
       .from("teams")
-      .select("id,name,points");
+      .select("id,name,points")
+      .order("id");
 
 
   if(error){
 
-    console.error(error);
+    console.error("ERRO AO CARREGAR TIMES:",error);
 
     setStatus(
       "ERRO AO CARREGAR O PLACAR",
@@ -2448,6 +2441,7 @@ async function loadTeams(){
     );
 
     return;
+
   }
 
 
@@ -2456,6 +2450,16 @@ async function loadTeams(){
 
 
   renderTeams();
+
+
+  /*
+    IMPORTANTE:
+
+    Depois que os times forem carregados,
+    preenchemos TODOS os selects.
+  */
+
+  populateAllTeamSelects();
 
 
   setStatus(
@@ -2467,7 +2471,110 @@ async function loadTeams(){
 
 
 // ============================================
-// CARREGAR RESULTADOS
+// PREENCHER TODOS OS SELECTS
+// ============================================
+
+function populateAllTeamSelects(){
+
+  /*
+    SELECTS DOS JOGOS
+  */
+
+  document
+    .querySelectorAll(".position-team")
+    .forEach(select=>{
+
+      const currentValue =
+        select.value;
+
+
+      const points =
+        select.dataset.points;
+
+      const position =
+        select.dataset.position;
+
+
+      select.innerHTML = `
+
+        <option value="">
+          Selecione o time
+        </option>
+
+        ${
+          teams.map(team=>`
+
+            <option value="${team.id}">
+              ${team.name.toUpperCase()}
+            </option>
+
+          `).join("")
+        }
+
+      `;
+
+
+      if(currentValue){
+
+        select.value =
+          currentValue;
+
+      }
+
+      select.dataset.points =
+        points;
+
+      select.dataset.position =
+        position;
+
+    });
+
+
+  /*
+    SELECTS DO BÔNUS
+  */
+
+  document
+    .querySelectorAll(".gift-team-select")
+    .forEach(select=>{
+
+      const currentValue =
+        select.value;
+
+
+      select.innerHTML = `
+
+        <option value="">
+          Selecione o time
+        </option>
+
+        ${
+          teams.map(team=>`
+
+            <option value="${team.id}">
+              ${team.name.toUpperCase()}
+            </option>
+
+          `).join("")
+        }
+
+      `;
+
+
+      if(currentValue){
+
+        select.value =
+          currentValue;
+
+      }
+
+    });
+
+}
+
+
+// ============================================
+// CARREGAR RESULTADOS DOS JOGOS
 // ============================================
 
 async function loadGameResults(){
@@ -2481,16 +2588,20 @@ async function loadGameResults(){
 
   if(error){
 
-    console.error(error);
+    console.error(
+      "ERRO AO CARREGAR RESULTADOS:",
+      error
+    );
 
     return;
+
   }
 
 
   games.forEach(game=>{
 
     const results =
-      data.filter(
+      (data || []).filter(
         result =>
           result.game === game.key
       );
@@ -2548,14 +2659,6 @@ function updateGameResultDisplay(
   }
 
 
-  /*
-    Se não existe resultado,
-    simplesmente escondemos a área.
-
-    Ela continua existindo, mas NÃO ocupa
-    espaço no layout.
-  */
-
   if(!results || !results.length){
 
     display.innerHTML = "";
@@ -2564,6 +2667,7 @@ function updateGameResultDisplay(
       "none";
 
     return;
+
   }
 
 
@@ -2582,7 +2686,8 @@ function updateGameResultDisplay(
   const sortedResults =
     [...results].sort(
       (a,b) =>
-        a.position - b.position
+        Number(a.position) -
+        Number(b.position)
     );
 
 
@@ -2598,7 +2703,8 @@ function updateGameResultDisplay(
         const team =
           teams.find(
             t =>
-              t.id === result.team_id
+              Number(t.id) ===
+              Number(result.team_id)
           );
 
 
@@ -2608,8 +2714,9 @@ function updateGameResultDisplay(
 
             <span>
               ${
-                positionNames[result.position-1]
-                || result.position
+                positionNames[
+                  Number(result.position)-1
+                ] || result.position
               }
 
               ${team ? team.name : "Time"}
@@ -2660,10 +2767,10 @@ async function editGameResult(
   if(!card) return;
 
 
-  card.classList.add("flipped");
-
-
   await populateTeamSelects(card);
+
+
+  card.classList.add("flipped");
 
 
   const {data,error} =
@@ -2683,6 +2790,7 @@ async function editGameResult(
     );
 
     return;
+
   }
 
 
@@ -2699,23 +2807,17 @@ async function editGameResult(
 
 
     const result =
-      data.find(
+      (data || []).find(
         item =>
-          item.position === position
+          Number(item.position) ===
+          position
       );
 
 
-    if(result){
-
-      select.value =
-        String(result.team_id);
-
-    }else{
-
-      select.value =
-        "";
-
-    }
+    select.value =
+      result
+        ? String(result.team_id)
+        : "";
 
   });
 
@@ -2723,10 +2825,13 @@ async function editGameResult(
 
 
 // ============================================
-// PREENCHER SELECTS
+// PREENCHER SELECTS DE UM CARD
 // ============================================
 
 async function populateTeamSelects(card){
+
+  if(!card) return;
+
 
   const selects =
     card.querySelectorAll(
@@ -2741,11 +2846,11 @@ async function populateTeamSelects(card){
 
 
     const points =
-      Number(select.dataset.points);
+      select.dataset.points;
 
 
     const position =
-      Number(select.dataset.position);
+      select.dataset.position;
 
 
     select.innerHTML = `
@@ -2774,8 +2879,12 @@ async function populateTeamSelects(card){
       position;
 
 
-    select.value =
-      currentValue;
+    if(currentValue){
+
+      select.value =
+        currentValue;
+
+    }
 
   });
 
@@ -2795,7 +2904,7 @@ async function populateTeamSelects(card){
     select.innerHTML = `
 
       <option value="">
-        Time
+        Selecione o time
       </option>
 
       ${
@@ -2811,8 +2920,12 @@ async function populateTeamSelects(card){
     `;
 
 
-    select.value =
-      currentValue;
+    if(currentValue){
+
+      select.value =
+        currentValue;
+
+    }
 
   });
 
@@ -2829,7 +2942,9 @@ function flipCard(card){
     !card ||
     !card.classList.contains("points-card")
   ){
+
     return;
+
   }
 
 
@@ -2848,80 +2963,455 @@ function flipCard(card){
 
 
 // ============================================
-// SALVAR RESULTADO
+// SALVAR RESULTADO DE JOGO
 // ============================================
 
-async function saveGiftPoints(event, button){
+async function saveGamePoints(
+  event,
+  button
+){
 
   event.stopPropagation();
 
-  const card = button.closest(".points-card");
 
-  const teamSelects = card.querySelectorAll(".gift-team-select");
-  const quantities = card.querySelectorAll(".gift-quantity");
+  const card =
+    button.closest(".points-card");
 
-  const bonusRows = [];
 
-  for(let i = 0; i < teamSelects.length; i++){
+  if(!card){
 
-    const teamId = Number(teamSelects[i].value);
-    const quantity = Number(quantities[i].value) || 0;
+    alert(
+      "Não foi possível identificar o jogo."
+    );
 
-    if(!teamId) continue;
+    return;
 
-    bonusRows.push({
-      team_id: teamId,
-      points: quantity
-    });
   }
 
+
+  const gameKey =
+    card.dataset.game;
+
+
+  if(!gameKey){
+
+    alert(
+      "Não foi possível identificar o jogo."
+    );
+
+    return;
+
+  }
+
+
+  const selects =
+    card.querySelectorAll(
+      ".position-team"
+    );
+
+
   /*
-    Só altera o banco depois que todos
-    os dados foram coletados.
+    Verifica se todos os 4 times
+    foram selecionados.
   */
 
-  const { error: deleteError } = await supabaseClient
-    .from("bonus_results")
-    .delete()
-    .neq("id", 0);
+  const teamIds =
+    Array.from(selects).map(
+      select =>
+        Number(select.value)
+    );
+
+
+  if(
+    teamIds.length !== 4 ||
+    teamIds.some(id => !id)
+  ){
+
+    alert(
+      "Selecione os 4 times antes de salvar."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Impede o mesmo time de aparecer
+    em duas posições.
+  */
+
+  if(
+    new Set(teamIds).size !==
+    teamIds.length
+  ){
+
+    alert(
+      "Cada time deve ocupar apenas uma posição."
+    );
+
+    return;
+
+  }
+
+
+  const rows =
+    Array.from(selects).map(select=>({
+
+      game:
+        gameKey,
+
+      position:
+        Number(select.dataset.position),
+
+      team_id:
+        Number(select.value),
+
+      points:
+        Number(select.dataset.points)
+
+    }));
+
+
+  console.log(
+    "SALVANDO RESULTADO:",
+    rows
+  );
+
+
+  /*
+    Primeiro remove o resultado anterior
+    somente daquele jogo.
+  */
+
+  const {
+    error:deleteError
+  } =
+    await supabaseClient
+      .from("game_results")
+      .delete()
+      .eq("game",gameKey);
+
 
   if(deleteError){
 
-    console.error(deleteError);
+    console.error(
+      "ERRO AO APAGAR RESULTADO ANTERIOR:",
+      deleteError
+    );
 
-    alert("Erro ao atualizar os bônus.");
+    alert(
+      "Erro ao atualizar o resultado."
+    );
 
     return;
+
   }
 
-  if(bonusRows.length > 0){
 
-    const { error } = await supabaseClient
-      .from("bonus_results")
-      .insert(bonusRows);
+  /*
+    Agora salva o novo resultado.
+  */
 
-    if(error){
+  const {
+    error:insertError
+  } =
+    await supabaseClient
+      .from("game_results")
+      .insert(rows);
 
-      console.error(error);
 
-      alert("Erro ao salvar os bônus.");
+  if(insertError){
 
-      return;
-    }
+    console.error(
+      "ERRO AO INSERIR RESULTADO:",
+      insertError
+    );
+
+    alert(
+      "Erro ao salvar o resultado."
+    );
+
+    return;
+
   }
+
+
+  /*
+    Recalcula o placar inteiro.
+  */
 
   await recalculateScores();
 
-  card.classList.remove("flipped");
+
+  /*
+    Fecha o card.
+  */
+
+  card.classList.remove(
+    "flipped"
+  );
+
+
+  /*
+    Atualiza placar e resultados.
+  */
 
   await loadTeams();
+
+  await loadGameResults();
+
+
+  setStatus(
+    "RESULTADO SALVO • PLACAR ATUALIZADO",
+    "ok"
+  );
+
+
+  alert(
+    "Resultado salvo com sucesso!"
+  );
+
+}
+
+
+// ============================================
+// SALVAR BÔNUS
+// ============================================
+
+async function saveGiftPoints(
+  event,
+  button
+){
+
+  event.stopPropagation();
+
+
+  const card =
+    button.closest(".points-card");
+
+
+  if(!card){
+
+    alert(
+      "Não foi possível identificar o card."
+    );
+
+    return;
+
+  }
+
+
+  const teamSelects =
+    card.querySelectorAll(
+      ".gift-team-select"
+    );
+
+
+  const quantities =
+    card.querySelectorAll(
+      ".gift-quantity"
+    );
+
+
+  const bonusRows = [];
+
+
+  /*
+    Primeiro coletamos todos os dados.
+  */
+
+  for(
+    let i = 0;
+    i < teamSelects.length;
+    i++
+  ){
+
+    const teamId =
+      Number(
+        teamSelects[i].value
+      );
+
+
+    const quantity =
+      Number(
+        quantities[i].value
+      );
+
+
+    /*
+      Linha vazia = ignora.
+    */
+
+    if(!teamId){
+
+      continue;
+
+    }
+
+
+    /*
+      Permite:
+
+      +10
+      +5
+      0
+      -5
+      -10
+    */
+
+    if(
+      Number.isNaN(quantity)
+    ){
+
+      alert(
+        "Digite um número válido nos bônus."
+      );
+
+      return;
+
+    }
+
+
+    bonusRows.push({
+
+      team_id:
+        teamId,
+
+      points:
+        quantity
+
+    });
+
+  }
+
+
+  /*
+    Impede o mesmo time de receber
+    duas linhas de bônus.
+  */
+
+  const selectedTeamIds =
+    bonusRows.map(
+      row =>
+        Number(row.team_id)
+    );
+
+
+  if(
+    new Set(selectedTeamIds).size !==
+    selectedTeamIds.length
+  ){
+
+    alert(
+      "Cada time só pode aparecer uma vez nos bônus."
+    );
+
+    return;
+
+  }
+
+
+  console.log(
+    "SALVANDO BÔNUS:",
+    bonusRows
+  );
+
+
+  /*
+    Apaga os bônus antigos.
+  */
+
+  const {
+    error:deleteError
+  } =
+    await supabaseClient
+      .from("bonus_results")
+      .delete()
+      .neq("id",0);
+
+
+  if(deleteError){
+
+    console.error(
+      "ERRO AO APAGAR BÔNUS:",
+      deleteError
+    );
+
+    alert(
+      "Erro ao atualizar os bônus."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Insere os novos bônus.
+  */
+
+  if(bonusRows.length > 0){
+
+    const {
+      error:insertError
+    } =
+      await supabaseClient
+        .from("bonus_results")
+        .insert(bonusRows);
+
+
+    if(insertError){
+
+      console.error(
+        "ERRO AO INSERIR BÔNUS:",
+        insertError
+      );
+
+      alert(
+        "Erro ao salvar os bônus."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  /*
+    Recalcula o placar.
+  */
+
+  await recalculateScores();
+
+
+  /*
+    Fecha o card.
+  */
+
+  card.classList.remove(
+    "flipped"
+  );
+
+
+  /*
+    Atualiza tudo.
+  */
+
+  await loadTeams();
+
 
   setStatus(
     "BÔNUS SALVO • PLACAR ATUALIZADO",
     "ok"
   );
 
-  alert("Bônus salvo com sucesso!");
+
+  alert(
+    "Bônus salvo com sucesso!"
+  );
+
 }
 
 
@@ -2942,9 +3432,13 @@ async function recalculateScores(){
 
   if(gameError){
 
-    console.error(gameError);
+    console.error(
+      "ERRO NOS RESULTADOS:",
+      gameError
+    );
 
     return;
+
   }
 
 
@@ -2959,9 +3453,13 @@ async function recalculateScores(){
 
   if(bonusError){
 
-    console.error(bonusError);
+    console.error(
+      "ERRO NOS BÔNUS:",
+      bonusError
+    );
 
     return;
+
   }
 
 
@@ -2978,12 +3476,16 @@ async function recalculateScores(){
 
   (gameResults || []).forEach(result=>{
 
+    const teamId =
+      Number(result.team_id);
+
+
     if(
-      totals[result.team_id] !== undefined
+      totals[teamId] !== undefined
     ){
 
-      totals[result.team_id] +=
-        Number(result.points);
+      totals[teamId] +=
+        Number(result.points) || 0;
 
     }
 
@@ -2992,39 +3494,59 @@ async function recalculateScores(){
 
   (bonusResults || []).forEach(result=>{
 
+    const teamId =
+      Number(result.team_id);
+
+
     if(
-      totals[result.team_id] !== undefined
+      totals[teamId] !== undefined
     ){
 
-      totals[result.team_id] +=
-        Number(result.points);
+      totals[teamId] +=
+        Number(result.points) || 0;
 
     }
 
   });
 
 
+  /*
+    Atualiza o total de cada time.
+  */
+
   for(const team of teams){
 
-    const {error} =
+    const {
+      error
+    } =
       await supabaseClient
         .from("teams")
         .update({
+
           points:
-            totals[team.id]
+            totals[team.id] || 0
+
         })
-        .eq("id",team.id);
+        .eq(
+          "id",
+          team.id
+        );
 
 
     if(error){
 
-      console.error(error);
+      console.error(
+        "ERRO AO ATUALIZAR TIME:",
+        team.name,
+        error
+      );
 
     }
 
   }
 
 }
+
 
 // ============================================
 // ZERAR PLACAR
@@ -3065,6 +3587,7 @@ async function resetScores(){
     );
 
     return;
+
   }
 
 
@@ -3086,6 +3609,7 @@ async function resetScores(){
     );
 
     return;
+
   }
 
 
@@ -3109,44 +3633,45 @@ async function resetScores(){
     );
 
     return;
+
   }
 
 
   document
-    .querySelectorAll(
-      ".position-team"
-    )
+    .querySelectorAll(".position-team")
     .forEach(select=>{
+
       select.value = "";
+
     });
 
 
   document
-    .querySelectorAll(
-      ".gift-team-select"
-    )
+    .querySelectorAll(".gift-team-select")
     .forEach(select=>{
+
       select.value = "";
+
     });
 
 
   document
-    .querySelectorAll(
-      ".gift-quantity"
-    )
+    .querySelectorAll(".gift-quantity")
     .forEach(input=>{
+
       input.value = 0;
+
     });
 
 
   document
-    .querySelectorAll(
-      ".points-card.flipped"
-    )
+    .querySelectorAll(".points-card.flipped")
     .forEach(card=>{
+
       card.classList.remove(
         "flipped"
       );
+
     });
 
 
@@ -3183,19 +3708,10 @@ function toggleRules(button){
   );
 
 
-  if(
+  button.textContent =
     rules.classList.contains("show")
-  ){
-
-    button.textContent =
-      "ESCONDER REGRAS ↑";
-
-  }else{
-
-    button.textContent =
-      "VER REGRAS →";
-
-  }
+      ? "ESCONDER REGRAS ↑"
+      : "VER REGRAS →";
 
 }
 
@@ -3215,19 +3731,10 @@ function togglePrize(button){
   );
 
 
-  if(
+  button.textContent =
     prizes.classList.contains("show")
-  ){
-
-    button.textContent =
-      "ESCONDER PRÊMIOS ↑";
-
-  }else{
-
-    button.textContent =
-      "VER PRÊMIOS →";
-
-  }
+      ? "ESCONDER PRÊMIOS ↑"
+      : "VER PRÊMIOS →";
 
 }
 
@@ -3308,7 +3815,6 @@ async function initialize(){
 initialize();
 
 </script>
-
 </body>
 </html>
 ```
