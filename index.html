@@ -3192,13 +3192,35 @@ async function saveGiftPoints(
       );
 
 
-const quantity =
-  Number(
-    quantities[i].value
-  ) || 0;
+    const quantity =
+      Number(
+        quantities[i].value
+      ) || 0;
 
 
-if(!teamId) continue;
+    if(!teamId) continue;
+
+
+    /*
+      Agora aceita pontos positivos,
+      negativos e zero.
+    */
+
+    if(quantity !== 0){
+
+      bonusRows.push({
+
+        team_id:
+          teamId,
+
+        points:
+          quantity
+
+      });
+
+    }
+
+  }
 
 
   if(bonusRows.length > 0){
@@ -3221,6 +3243,30 @@ if(!teamId) continue;
     }
 
   }
+
+
+  await recalculateScores();
+
+
+  card.classList.remove(
+    "flipped"
+  );
+
+
+  await loadTeams();
+
+
+  setStatus(
+    "BÔNUS SALVO • PLACAR ATUALIZADO",
+    "ok"
+  );
+
+
+  alert(
+    "Bônus salvo com sucesso!"
+  );
+
+}
 
 
   await recalculateScores();
