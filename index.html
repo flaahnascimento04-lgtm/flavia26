@@ -2011,7 +2011,6 @@ footer{
           <input
             type="number"
             class="gift-quantity"
-            min="0"
             value="0"
             placeholder="0"
           >
@@ -2031,7 +2030,6 @@ footer{
           <input
             type="number"
             class="gift-quantity"
-            min="0"
             value="0"
             placeholder="0"
           >
@@ -2051,7 +2049,6 @@ footer{
           <input
             type="number"
             class="gift-quantity"
-            min="0"
             value="0"
             placeholder="0"
           >
@@ -2071,7 +2068,6 @@ footer{
           <input
             type="number"
             class="gift-quantity"
-            min="0"
             value="0"
             placeholder="0"
           >
@@ -3196,40 +3192,13 @@ async function saveGiftPoints(
       );
 
 
-    const quantity =
-      Number(
-        quantities[i].value
-      ) || 0;
+const quantity =
+  Number(
+    quantities[i].value
+  ) || 0;
 
 
-    if(!teamId) continue;
-
-
-    if(quantity < 0){
-
-      alert(
-        "A quantidade de pontos não pode ser negativa."
-      );
-
-      return;
-    }
-
-
-    if(quantity > 0){
-
-      bonusRows.push({
-
-        team_id:
-          teamId,
-
-        points:
-          quantity
-
-      });
-
-    }
-
-  }
+if(!teamId) continue;
 
 
   if(bonusRows.length > 0){
