@@ -398,38 +398,29 @@ h1 span{
   margin-bottom:12px;
 }
 
+.bonus-teams{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-top:8px;
+}
+
 .gift-team{
   display:grid;
-  grid-template-columns:1fr 55px;
-  gap:7px;
+  grid-template-columns:1fr 70px;
+  gap:10px;
   align-items:center;
-  margin-bottom:8px;
 }
 
 .gift-team label{
-  grid-column:1 / -1;
-  margin:0 0 2px;
-  font-size:8px;
-  color:#817987;
-  letter-spacing:.08em;
-}
-
-.gift-team-select{
-  grid-column:1;
-  width:100%;
-  box-sizing:border-box;
-  padding:8px;
-  background:#17131b;
-  border:1px solid rgba(255,255,255,.1);
-  color:#fff;
-  font-family:inherit;
+  margin:0;
   font-size:9px;
-  outline:none;
+  color:#fff;
+  letter-spacing:.08em;
+  font-weight:600;
 }
 
 .gift-quantity{
-  grid-column:2;
-  grid-row:2;
   width:100%;
   box-sizing:border-box;
   padding:8px;
@@ -437,8 +428,14 @@ h1 span{
   border:1px solid rgba(255,255,255,.1);
   color:#fff;
   font-family:inherit;
-  font-size:9px;
+  font-size:11px;
+  text-align:center;
   outline:none;
+  border-radius:6px;
+}
+
+.gift-quantity:focus{
+  border-color:#b99aca;
 }
 
 .prizes{
@@ -2255,117 +2252,88 @@ footer{
 
       <div class="card-back">
 
-        <div class="points-number">
-          ✦ · BÔNUS
-        </div>
+  <div class="points-number">
+    ✦ · BÔNUS
+  </div>
 
-        <h3>
-          Pontos
-        </h3>
+  <h3>
+    Pontos
+  </h3>
 
-        <p class="bonus-instruction">
-          Coloque quantos pontos de surpresa
-          sua equipe ganhou.
-        </p>
+  <p class="bonus-instruction">
+    Coloque os pontos que cada time ganhou ou perdeu.
+    <br>
+    <strong>Valores negativos retiram pontos.</strong>
+  </p>
 
+  <div class="bonus-teams">
 
-        <div class="gift-team">
+    <div class="gift-team">
+      <label class="gift-team-name">TIME 1</label>
 
-          <label>
-            TIME 1
-          </label>
-
-          <select class="gift-team-select">
-          </select>
-
-          <input
-            type="number"
-            class="gift-quantity"
-            value="0"
-            placeholder="0"
-          >
-
-        </div>
-
-
-        <div class="gift-team">
-
-          <label>
-            TIME 2
-          </label>
-
-          <select class="gift-team-select">
-          </select>
-
-          <input
-            type="number"
-            class="gift-quantity"
-            value="0"
-            placeholder="0"
-          >
-
-        </div>
-
-
-        <div class="gift-team">
-
-          <label>
-            TIME 3
-          </label>
-
-          <select class="gift-team-select">
-          </select>
-
-          <input
-            type="number"
-            class="gift-quantity"
-            value="0"
-            placeholder="0"
-          >
-
-        </div>
-
-
-        <div class="gift-team">
-
-          <label>
-            TIME 4
-          </label>
-
-          <select class="gift-team-select">
-          </select>
-
-          <input
-            type="number"
-            class="gift-quantity"
-            value="0"
-            placeholder="0"
-          >
-
-        </div>
-
-
-        <button
-           type="button"
-           class="save-game"
-          onclick="saveGiftPoints(event, this)"
-        >
-          SALVAR BÔNUS
-        </button>
-
-        <button
-          class="back-button"
-          onclick="flipCard(this.parentElement.parentElement)"
-        >
-          ← VOLTAR
-        </button>
-
-      </div>
-
+      <input
+        type="number"
+        class="gift-quantity"
+        value="0"
+        step="1"
+        placeholder="0"
+      >
     </div>
 
+    <div class="gift-team">
+      <label class="gift-team-name">TIME 2</label>
+
+      <input
+        type="number"
+        class="gift-quantity"
+        value="0"
+        step="1"
+        placeholder="0"
+      >
+    </div>
+
+    <div class="gift-team">
+      <label class="gift-team-name">TIME 3</label>
+
+      <input
+        type="number"
+        class="gift-quantity"
+        value="0"
+        step="1"
+        placeholder="0"
+      >
+    </div>
+
+    <div class="gift-team">
+      <label class="gift-team-name">TIME 4</label>
+
+      <input
+        type="number"
+        class="gift-quantity"
+        value="0"
+        step="1"
+        placeholder="0"
+      >
+    </div>
 
   </div>
+
+  <button
+    type="button"
+    class="save-game"
+    onclick="saveGiftPoints(event, this)"
+  >
+    SALVAR BÔNUS
+  </button>
+
+  <button
+    class="back-button"
+    onclick="flipCard(this.parentElement.parentElement)"
+  >
+    ← VOLTAR
+  </button>
+
+</div>
 
 </section>
 <!-- =========================
@@ -3109,43 +3077,19 @@ async function populateTeamSelects(card){
   });
 
 
-  const giftSelects =
-    card.querySelectorAll(
-      ".gift-team-select"
-    );
+const giftLabels =
+  card.querySelectorAll(".gift-team-name");
 
+giftLabels.forEach((label, index)=>{
 
-  giftSelects.forEach(select=>{
+  if(teams[index]){
 
-    const currentValue =
-      select.value;
+    label.textContent =
+      teams[index].name.toUpperCase();
 
+  }
 
-    select.innerHTML = `
-
-      <option value="">
-        Time
-      </option>
-
-      ${
-        teams.map(team=>`
-
-          <option value="${team.id}">
-            ${team.name.toUpperCase()}
-          </option>
-
-        `).join("")
-      }
-
-    `;
-
-
-    select.value =
-      currentValue;
-
-  });
-
-}
+});
 
 
 // ============================================
@@ -3184,73 +3128,98 @@ async function saveGiftPoints(event, button){
 
   event.stopPropagation();
 
-  const card = button.closest(".points-card");
+  const card =
+    button.closest(".points-card");
 
-  const teamSelects = card.querySelectorAll(".gift-team-select");
-  const quantities = card.querySelectorAll(".gift-quantity");
+  const quantities =
+    card.querySelectorAll(".gift-quantity");
 
   const bonusRows = [];
 
-  for(let i = 0; i < teamSelects.length; i++){
+  for(let i = 0; i < quantities.length; i++){
 
-    const teamId = Number(teamSelects[i].value);
-    const quantity = Number(quantities[i].value) || 0;
+    const team =
+      teams[i];
 
-    if(!teamId) continue;
+    if(!team) continue;
 
-    bonusRows.push({
-      team_id: teamId,
-      points: quantity
-    });
+    const quantity =
+      Number(quantities[i].value) || 0;
+
+    // Só salva se houver alteração
+    if(quantity !== 0){
+
+      bonusRows.push({
+        team_id: team.id,
+        points: quantity
+      });
+
+    }
+
   }
 
-  /*
-    Só altera o banco depois que todos
-    os dados foram coletados.
-  */
-
-  const { error: deleteError } = await supabaseClient
-    .from("bonus_results")
-    .delete()
-    .neq("id", 0);
+  // Remove os bônus anteriores
+  const { error: deleteError } =
+    await supabaseClient
+      .from("bonus_results")
+      .delete()
+      .neq("id", 0);
 
   if(deleteError){
 
     console.error(deleteError);
 
-    alert("Erro ao atualizar os bônus.");
+    alert(
+      "Erro ao atualizar os bônus."
+    );
 
     return;
   }
 
+
+  // Salva os novos bônus
   if(bonusRows.length > 0){
 
-    const { error } = await supabaseClient
-      .from("bonus_results")
-      .insert(bonusRows);
+    const { error } =
+      await supabaseClient
+        .from("bonus_results")
+        .insert(bonusRows);
 
     if(error){
 
       console.error(error);
 
-      alert("Erro ao salvar os bônus.");
+      alert(
+        "Erro ao salvar os bônus."
+      );
 
       return;
     }
+
   }
 
+
+  // Recalcula o placar completo
   await recalculateScores();
 
+
+  // Fecha o card
   card.classList.remove("flipped");
 
+
+  // Atualiza o placar
   await loadTeams();
+
 
   setStatus(
     "BÔNUS SALVO • PLACAR ATUALIZADO",
     "ok"
   );
 
-  alert("Bônus salvo com sucesso!");
+  alert(
+    "Bônus salvo com sucesso!"
+  );
+
 }
 
 
