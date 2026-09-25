@@ -3122,7 +3122,147 @@ function flipCard(card){
 
 }
 
+// ============================================
+// SALVAR RESULTADO DO JOGO
+// ============================================
 
+async function saveGamePoints(event, button){
+
+  event.stopPropagation();
+
+  const card =
+    button.closest(".points-card");
+
+  if(!card){
+    return;
+  }
+
+  const gameKey =
+    card.dataset.game;
+
+  if(!gameKey){
+    alert("Erro: jogo não identificado.");
+    return;
+  }
+
+  const selects =
+    card.querySelectorAll(".position-team");
+
+  const results = [];
+  const selectedTeams = new Set();
+
+  for(const select of selects){
+
+    const teamId =
+      select.value;
+
+    const position =
+      Number(select.dataset.position);
+
+    const points =
+      Number(select.dataset.points);
+
+    // Verifica se todos os lugares foram preenchidos
+    if(!teamId){
+
+      alert(
+        `Selecione o time do ${position}º lugar.`
+      );
+
+      return;
+    }
+
+    // Impede o mesmo time em duas posições
+    if(selectedTeams.has(teamId)){
+
+      alert(
+        "Cada time só pode ocupar uma posição."
+      );
+
+      return;
+    }
+
+    selectedTeams.add(teamId);
+
+    results.push({
+      team_id: Number(teamId),
+      points: points,
+      position: position,
+      game: gameKey
+    });
+
+  }
+
+
+  // Remove o resultado anterior desse jogo
+  const {
+    error: deleteError
+  } =
+    await supabaseClient
+      .from("game_results")
+      .delete()
+      .eq("game", gameKey);
+
+
+  if(deleteError){
+
+    console.error(deleteError);
+
+    alert(
+      "Erro ao apagar o resultado anterior."
+    );
+
+    return;
+  }
+
+
+  // Salva o novo resultado
+  const {
+    error: insertError
+  } =
+    await supabaseClient
+      .from("game_results")
+      .insert(results);
+
+
+  if(insertError){
+
+    console.error(insertError);
+
+    alert(
+      "Erro ao salvar o resultado."
+    );
+
+    return;
+  }
+
+
+  // Recalcula todos os pontos
+  await recalculateScores();
+
+
+  // Fecha o card
+  card.classList.remove("flipped");
+
+
+  // Atualiza o placar
+  await loadTeams();
+
+
+  // Atualiza o resultado salvo no card
+  await loadGameResults();
+
+
+  setStatus(
+    "RESULTADO SALVO • PLACAR ATUALIZADO",
+    "ok"
+  );
+
+  alert(
+    "Resultado salvo com sucesso!"
+  );
+
+}
 // ============================================
 // SALVAR RESULTADO
 // ============================================
